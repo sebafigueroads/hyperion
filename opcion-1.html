@@ -388,6 +388,7 @@ form{display:grid;gap:16px}
 .field select{appearance:none;-webkit-appearance:none;cursor:pointer;
   background-image:linear-gradient(45deg,transparent 50%,var(--gold) 50%),linear-gradient(135deg,var(--gold) 50%,transparent 50%);
   background-position:calc(100% - 19px) 21px,calc(100% - 13px) 21px;background-size:6px 6px,6px 6px;background-repeat:no-repeat}
+.field input:focus-visible,.field select:focus-visible,.field textarea:focus-visible{outline:2px solid #E7CC89;outline-offset:2px}
 .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--gold);background:rgba(22,48,90,.78);outline:none}
 .field input::placeholder,.field textarea::placeholder{color:#7E93B0}
 .form-foot{display:flex;flex-wrap:wrap;align-items:center;gap:16px 22px;margin-top:6px}
@@ -508,6 +509,7 @@ form{display:grid;gap:16px}
   <div class="wrap band-grid">
     <div>
       <p class="eyebrow" data-rev>La categoría</p>
+<!-- COPY PROPUESTO -->
       <h2 class="h2" id="h-cat" data-rev data-delay="70">Un vacío que nadie ocupa.</h2>
       <p class="lead" style="margin-top:22px" data-rev data-delay="140">Toda empresa mediana audita sus estados financieros una vez al año. Ninguna audita el proceso por el cual su directorio convierte información en compromiso de capital. Ese vacío es la categoría que Hyperion ocupa.</p>
     </div>
@@ -526,15 +528,17 @@ form{display:grid;gap:16px}
 <section class="sec evid" id="evidencia" aria-labelledby="h-evid">
   <div class="wrap">
     <p class="eyebrow" data-rev>01 · La evidencia</p>
+<!-- COPY PROPUESTO -->
     <h2 class="h2" id="h-evid" data-rev data-delay="70">El proceso decide más<br>que el análisis.</h2>
     <!-- COPY PROPUESTO -->
     <p class="lead" style="margin-top:24px" data-rev data-delay="140">Cuatro cifras sostienen la categoría. Ninguna es una opinión sobre gobierno corporativo: son mediciones publicadas, con autor identificado y fuente al pie.</p>
 
     <!-- Gráfico 39% vs 8% · toda barra lleva etiqueta de valor directa (sistema de marca, lámina 15) -->
     <div class="chart" data-rev data-delay="120">
+<!-- COPY PROPUESTO -->
       <p class="chart-t">Qué explica la varianza del resultado</p>
       <!-- COPY PROPUESTO -->
-      <p class="chart-s">Dos variables, medidas sobre la misma base de decisiones de inversión.</p>
+      <p class="chart-s">Dos variables del mismo estudio. El detalle metodológico está en la base documental.</p>
 
       <div class="bar">
         <p class="bar-lbl">Calidad del proceso decisional</p>
@@ -548,24 +552,24 @@ form{display:grid;gap:16px}
       </div>
 
       <div class="chart-axis"><span>0%</span><span class="axis-mid">Varianza del resultado · escala 0 a 100%</span><span>100%</span></div>
-      <p class="src" style="margin-top:14px">Lovallo &amp; Sibony, McKinsey Quarterly.</p>
+      <p class="src" style="margin-top:14px">Lovallo &amp; Sibony (McKinsey Quarterly) · Kahneman, Sibony &amp; Sunstein · Flyvbjerg · Malmendier &amp; Tate (NBER).</p>
     </div>
 
     <div class="figs">
       <div class="fig" data-rev>
         <span class="fig-n">+6,9 pp</span>
         <p class="fig-t">De ROI adicional en el cuartil superior de calidad de proceso decisional.</p>
-        <p class="src">Lovallo &amp; Sibony, McKinsey Quarterly.</p>
+        <p class="src">Lovallo &amp; Sibony (McKinsey Quarterly) · Kahneman, Sibony &amp; Sunstein · Flyvbjerg · Malmendier &amp; Tate (NBER).</p>
       </div>
       <div class="fig" data-rev data-delay="90">
         <span class="fig-n">55%</span>
         <p class="fig-t">De diferencia mediana entre profesionales evaluando exactamente el mismo caso. Esperaban 10%.</p>
-        <p class="src">Kahneman, Sibony &amp; Sunstein.</p>
+        <p class="src">Lovallo &amp; Sibony (McKinsey Quarterly) · Kahneman, Sibony &amp; Sunstein · Flyvbjerg · Malmendier &amp; Tate (NBER).</p>
       </div>
       <div class="fig" data-rev data-delay="180">
         <span class="fig-n">28%</span>
         <p class="fig-t">De 2.207 ejecutivos calificó como buena la calidad de sus decisiones estratégicas.</p>
-        <p class="src">Lovallo &amp; Sibony, McKinsey Quarterly.</p>
+        <p class="src">Lovallo &amp; Sibony (McKinsey Quarterly) · Kahneman, Sibony &amp; Sunstein · Flyvbjerg · Malmendier &amp; Tate (NBER).</p>
       </div>
     </div>
 
@@ -574,21 +578,22 @@ form{display:grid;gap:16px}
       <ul class="sup-l">
         <li>
           <b>90%</b><span>de correlación en la asignación de capital año a año, durante veinte años. Anclaje presupuestario.</span>
-          <span class="src">Lovallo &amp; Sibony, McKinsey Quarterly.</span>
+          <span class="src">Lovallo &amp; Sibony (McKinsey Quarterly) · Kahneman, Sibony &amp; Sunstein · Flyvbjerg · Malmendier &amp; Tate (NBER).</span>
         </li>
         <li>
           <b>80%</b><span>de los negocios no rentables y demandantes de caja sobrevivieron una década. Unidades zombi.</span>
-          <span class="src">Lovallo &amp; Sibony, McKinsey Quarterly.</span>
+          <span class="src">Lovallo &amp; Sibony (McKinsey Quarterly) · Kahneman, Sibony &amp; Sunstein · Flyvbjerg · Malmendier &amp; Tate (NBER).</span>
         </li>
         <li>
-          <b>70%</b><span>de reducción del error de estimación al usar comparables reales. Clase de referencia.</span>
-          <span class="src">Flyvbjerg.</span>
+          <b>Hasta 70%</b><span>de reducción del error de estimación al usar comparables reales. Clase de referencia.</span>
+          <span class="src">Lovallo &amp; Sibony (McKinsey Quarterly) · Kahneman, Sibony &amp; Sunstein · Flyvbjerg · Malmendier &amp; Tate (NBER).</span>
         </li>
         <li>
           <b>+1,5% a +3,9%</b><span>de retorno al accionista con reasignación dinámica de capital.</span>
-          <span class="src">Lovallo &amp; Sibony, McKinsey Quarterly.</span>
+          <span class="src">Lovallo &amp; Sibony (McKinsey Quarterly) · Kahneman, Sibony &amp; Sunstein · Flyvbjerg · Malmendier &amp; Tate (NBER).</span>
         </li>
       </ul>
+<!-- COPY PROPUESTO -->
       <p class="fuentes"><strong>Base documental.</strong> Lovallo &amp; Sibony (McKinsey Quarterly) · Kahneman, Sibony &amp; Sunstein · Flyvbjerg · Malmendier &amp; Tate (NBER). Hyperion no publica cifras propias de resultado: toda cifra de esta página proviene de investigación con autor identificado.</p>
     </div>
   </div>
@@ -608,6 +613,7 @@ form{display:grid;gap:16px}
 <section class="sec" id="relato" aria-labelledby="h-rel">
   <div class="wrap">
     <p class="eyebrow" data-rev>02 · El relato</p>
+<!-- COPY PROPUESTO -->
     <h2 class="h2" id="h-rel" data-rev data-delay="70">Tres pilares.</h2>
     <div class="pil">
       <article class="pil-i" data-rev>
@@ -633,6 +639,7 @@ form{display:grid;gap:16px}
 <section class="sec paper" id="portafolio" aria-labelledby="h-port">
   <div class="wrap">
     <p class="eyebrow" data-rev>03 · El portafolio</p>
+<!-- COPY PROPUESTO -->
     <h2 class="h2" id="h-port" data-rev data-delay="70">Tres líneas, una secuencia.</h2>
     <p class="lead" style="margin-top:22px" data-rev data-delay="140">El diagnóstico abre. La arquitectura instala. El acompañamiento sostiene.</p>
 
@@ -644,7 +651,7 @@ form{display:grid;gap:16px}
           <p>Instrumento de 45 ítems que cada director responde por separado. Entrega el Índice de Vulnerabilidad Decisional (IVD), el Índice de Ruido entre directores y un plan 30/60/90. Es el producto de entrada al portafolio.</p>
         </div>
         <ul class="meta">
-          <li><b>Ciclo</b><span>4 a 8 semanas</span></li>
+          <li><b>Ciclo de venta</b><span>4 a 8 semanas</span></li>
           <li><b>Rol</b><span>Adquisición y calificación</span></li>
         </ul>
       </article>
@@ -657,7 +664,7 @@ form{display:grid;gap:16px}
         </div>
         <ul class="meta">
           <li><b>Proyecto</b><span>3 a 6 meses</span></li>
-          <li><b>Ciclo</b><span>2 a 4 meses</span></li>
+          <li><b>Ciclo de venta</b><span>2 a 4 meses</span></li>
           <li><b>Rol</b><span>Monetización principal</span></li>
         </ul>
       </article>
@@ -669,7 +676,7 @@ form{display:grid;gap:16px}
           <p>Presencia fraccional en comité y directorio: disciplina financiera más higiene de decisión. Es la línea de ingreso recurrente y el objetivo de conversión de largo plazo.</p>
         </div>
         <ul class="meta">
-          <li><b>Ciclo</b><span>3 a 6 meses</span></li>
+          <li><b>Ciclo de venta</b><span>3 a 6 meses</span></li>
           <li><b>Rol</b><span>Retención y valor de vida</span></li>
         </ul>
       </article>
@@ -684,6 +691,7 @@ form{display:grid;gap:16px}
       <p class="eyebrow" style="margin-top:clamp(34px,4.6vw,52px)" data-rev>Cómo funciona el diagnóstico</p>
       <div class="mech-grid">
         <div data-rev>
+<!-- COPY PROPUESTO -->
           <h3 class="h3" style="margin-bottom:20px">Siete bloques, 45 ítems, un índice</h3>
           <ul class="blocks">
             <li class="blk"><span class="blk-name">A · Sesgos de acción</span><span class="blk-items">6 ítems</span><span class="blk-track" aria-hidden="true"><i class="blk-fill" style="--w:.75"></i></span><span class="blk-pct">15%</span></li>
@@ -694,6 +702,7 @@ form{display:grid;gap:16px}
             <li class="blk"><span class="blk-name">F · Higiene de proceso</span><span class="blk-items">8 ítems</span><span class="blk-track" aria-hidden="true"><i class="blk-fill" style="--w:1"></i></span><span class="blk-pct">20%</span></li>
             <li class="blk"><span class="blk-name">G · Condiciones de decisión</span><span class="blk-items">6 ítems</span><span class="blk-track" aria-hidden="true"><i class="blk-fill" style="--w:.50"></i></span><span class="blk-pct">10%</span></li>
           </ul>
+<!-- COPY PROPUESTO -->
           <p class="src plain" style="margin-top:14px">Peso de cada bloque en el índice. Las barras están a escala del bloque de mayor peso, 20%. El valor exacto va escrito en cada fila.</p>
         </div>
 
@@ -727,6 +736,7 @@ form{display:grid;gap:16px}
 <section class="sec evid" id="objeciones" aria-labelledby="h-obj">
   <div class="wrap">
     <p class="eyebrow" data-rev>04 · Las objeciones</p>
+<!-- COPY PROPUESTO -->
     <h2 class="h2" id="h-obj" data-rev data-delay="70">Cinco objeciones reales.<br>Cinco respuestas.</h2>
     <!-- COPY PROPUESTO -->
     <p class="lead" style="margin-top:24px" data-rev data-delay="140">No son hipótesis. Son las respuestas que aparecen en conversación comercial. Están aquí para que no tenga que esperar a la reunión.</p>
@@ -735,7 +745,7 @@ form{display:grid;gap:16px}
       <article class="obj" data-rev>
         <p class="obj-q">«Esto es psicología, no gestión»</p>
         <p class="obj-a"><span class="obj-tag">Respuesta</span>El hallazgo central es financiero, no clínico. El proceso explica 39% de la varianza del resultado; el análisis, 8%.</p>
-        <p class="src">Lovallo &amp; Sibony, McKinsey Quarterly.</p>
+        <p class="src">Lovallo &amp; Sibony (McKinsey Quarterly) · Kahneman, Sibony &amp; Sunstein · Flyvbjerg · Malmendier &amp; Tate (NBER).</p>
       </article>
 
       <article class="obj" data-rev data-delay="70">
@@ -795,6 +805,7 @@ form{display:grid;gap:16px}
   <div class="wrap form-grid">
     <div>
       <p class="eyebrow" data-rev>05 · La conversación</p>
+<!-- COPY PROPUESTO -->
       <h3 class="h3" id="h-form" data-rev data-delay="60">Antes de escribir, revise si su mesa califica.</h3>
       <ul class="qual" data-rev data-delay="120">
         <li class="si"><b>Califica</b><span>Órgano de gobierno con sesiones periódicas y actas; al menos un miembro externo o la intención de incorporarlo.</span></li>
@@ -864,6 +875,7 @@ form{display:grid;gap:16px}
         <p class="aviso" id="form-aviso" role="status" aria-live="polite"><noscript>Formulario de demostración: no envía datos a ningún destino.</noscript></p>
       </form>
       <!-- Declaración obligatoria: el brief deja correo y teléfono en [A COMPLETAR] -->
+<!-- COPY PROPUESTO -->
       <p class="src plain" style="margin-top:18px">Demostración de propuesta. Este formulario no envía datos a ningún destino: el correo de contacto, el teléfono y el enlace de agendamiento están pendientes de definición en el brief.</p>
     </div>
   </div>
@@ -890,6 +902,7 @@ form{display:grid;gap:16px}
           <div class="lex-r"><span>España, México</span><span>Consejo de administración</span><span>Consejero</span></div>
           <div class="lex-r"><span>Colombia, Rep. Dominicana, Venezuela</span><span>Junta directiva</span><span>Miembro de junta</span></div>
         </div>
+<!-- COPY PROPUESTO -->
         <p class="src plain" style="margin-top:14px">Esta página está escrita en el léxico de Chile. El nombre del instrumento se adapta al órgano local en cada mercado de destino.</p>
       </div>
     </div>
