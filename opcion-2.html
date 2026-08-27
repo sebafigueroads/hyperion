@@ -1,0 +1,1012 @@
+<!doctype html>
+<html lang="es-CL" id="top">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Hyperion Advisory · Diagnóstico de Sesgos de Directorio</title>
+<meta name="description" content="Los números se auditan. Las decisiones, casi nunca. Panel corto de diez preguntas y resultado indicativo por bloque.">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#071527">
+<link rel="icon" type="image/png" sizes="512x512" href="img/marca/favicon-512.png">
+<link rel="apple-touch-icon" href="img/marca/favicon-180.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hyperion Advisory · Diagnóstico de Sesgos de Directorio">
+<meta property="og:description" content="Los números se auditan. Las decisiones, casi nunca. Diez preguntas y un resultado indicativo por bloque.">
+<meta property="og:image" content="https://sebafigueroads.github.io/hyperion/img/og.jpg">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+:root{
+  --navy:#0B1E3C; --deep:#071527; --card:#16305A;
+  --oro:#C9A860; --oro-cl:#E7CC89; --oro-os:#A78C55;
+  --marfil:#F5F1E8; --hielo:#8FB8E8;
+  --tinta:#0B1E3C; --tinta-2:#44557A;
+  --serif:"Playfair Display","Iowan Old Style",Baskerville,"Times New Roman",Georgia,serif;
+  --sans:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --wrap:min(1180px, 100% - 2.5rem);
+  --sec:clamp(4rem,9vw,7.5rem);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;overflow-x:hidden;scroll-behavior:smooth;scroll-padding-top:92px}
+section[id],#res-foco,legend{scroll-margin-top:92px}
+body{margin:0;background:var(--deep);color:var(--marfil);font-family:var(--sans);
+  font-size:17px;line-height:1.62;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img,video{display:block;max-width:100%}
+h1,h2,h3{font-family:var(--serif);font-weight:600;letter-spacing:-.015em;line-height:1.08;margin:0}
+p{margin:0}
+a{color:inherit}
+button{font:inherit;color:inherit}
+.wrap{width:var(--wrap);margin-inline:auto}
+.sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+:focus-visible{outline:2px solid var(--oro-cl);outline-offset:3px;border-radius:2px}
+.light :focus-visible{outline-color:#0B1E3C}
+.skip{position:absolute;left:1rem;top:-4rem;z-index:60;background:var(--oro);color:#071527;
+  padding:.85rem 1.2rem;font-weight:600;border-radius:2px;transition:top .2s}
+.skip:focus{top:1rem}
+
+/* ---------- nav ---------- */
+.nav{position:fixed;inset:0 0 auto;z-index:50;background:rgba(7,21,39,.86);
+  border-bottom:1px solid rgba(201,168,96,.22)}
+@supports (backdrop-filter:blur(8px)){.nav{backdrop-filter:blur(10px)}}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:70px}
+.lockup{display:inline-block;position:relative;text-decoration:none;padding-bottom:9px;flex:none}
+.lk-name{display:block;font-family:var(--serif);font-size:1.22rem;line-height:1;color:var(--marfil)}
+.lk-sub{display:block;font-size:.545rem;letter-spacing:.44em;text-transform:uppercase;
+  color:var(--oro);margin-top:5px;padding-left:.12em}
+.lk-arc{position:absolute;left:0;right:0;bottom:0;height:9px;border-bottom:1.5px solid var(--oro);
+  border-radius:0 0 50% 50% / 0 0 100% 100%}
+.nav-links{display:none;gap:1.9rem;font-size:.79rem;letter-spacing:.11em;text-transform:uppercase}
+.nav-links a{text-decoration:none;color:rgba(245,241,232,.82);padding:.72rem 0;display:inline-flex;align-items:center;min-height:44px}
+.nav-links a:hover{color:var(--oro-cl)}
+.nav-cta{display:inline-flex;align-items:center;min-height:44px;padding:.55rem 1.05rem;
+  border:1px solid var(--oro);color:var(--oro-cl);text-decoration:none;font-size:.76rem;
+  letter-spacing:.13em;text-transform:uppercase;white-space:nowrap}
+.nav-cta:hover{background:var(--oro);color:#071527}
+@media(min-width:900px){.nav-links{display:flex}}
+
+/* ---------- hero ---------- */
+.hero{position:relative;overflow:hidden;background:var(--deep);
+  padding:calc(70px + clamp(3.5rem,11vw,7rem)) 0 clamp(3.5rem,8vw,6rem)}
+.hero-media{position:absolute;inset:0;z-index:0}
+.hero-media img{width:100%;height:100%;object-fit:cover;object-position:center 42%}
+.bgv{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;
+  opacity:0;transition:opacity 1.2s ease;pointer-events:none}
+.bgv.ok{opacity:1}
+.scrim{position:absolute;inset:0;z-index:2;
+  background:linear-gradient(180deg,rgba(7,21,39,.90) 0%,rgba(7,21,39,.70) 34%,rgba(7,21,39,.86) 72%,rgba(7,21,39,.98) 100%)}
+.scrim2{position:absolute;inset:0;z-index:2;
+  background:radial-gradient(115% 85% at 18% 30%,rgba(11,30,60,.30) 0%,rgba(7,21,39,.86) 78%)}
+.hero .wrap{position:relative;z-index:3}
+.eyebrow{font-size:.7rem;letter-spacing:.26em;text-transform:uppercase;color:var(--oro);
+  margin:0 0 1.4rem;line-height:1.7}
+.eyebrow::before{content:"";display:inline-block;width:34px;height:1px;background:var(--oro);
+  vertical-align:middle;margin:0 .8rem .18em 0}
+h1{font-size:clamp(2.35rem,8.4vw,5.1rem);max-width:15ch}
+h1 .op{color:rgba(245,241,232,.56)}
+.hero-sub{margin-top:1.7rem;max-width:46ch;font-size:clamp(1rem,2.6vw,1.16rem);
+  color:rgba(245,241,232,.86)}
+.hero-q{margin-top:2.4rem;padding-left:1.15rem;border-left:2px solid var(--oro);
+  font-family:var(--serif);font-size:clamp(1.15rem,3.6vw,1.6rem);color:var(--oro-cl);max-width:20ch}
+.cta-row{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:2.4rem}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:52px;
+  padding:.9rem 1.6rem;text-decoration:none;font-size:.82rem;letter-spacing:.13em;
+  text-transform:uppercase;font-weight:600;border:1px solid transparent;cursor:pointer;
+  transition:background .18s ease,color .18s ease,border-color .18s ease}
+.btn-oro{background:var(--oro);color:#071527;border-color:var(--oro)}
+.btn-oro:hover{background:var(--oro-cl);border-color:var(--oro-cl)}
+.btn-linea{border-color:rgba(245,241,232,.42);color:var(--marfil)}
+.btn-linea:hover{border-color:var(--oro);color:var(--oro-cl)}
+.light .btn-linea{border-color:rgba(11,30,60,.4);color:var(--tinta)}
+.light .btn-linea:hover{border-color:var(--navy);background:var(--navy);color:var(--marfil)}
+.arco{position:absolute;left:50%;bottom:-2px;transform:translateX(-50%);width:150%;height:110px;
+  border-top:1.5px solid rgba(201,168,96,.55);border-radius:50% 50% 0 0 / 100% 100% 0 0;z-index:4;
+  pointer-events:none}
+
+/* ---------- secciones ---------- */
+section{position:relative}
+.s-navy{background:var(--navy);padding:var(--sec) 0}
+.s-deep{background:var(--deep);padding:var(--sec) 0}
+.s-luz{background:var(--marfil);color:var(--tinta);padding:var(--sec) 0}
+.s-head{max-width:52ch}
+h2{font-size:clamp(1.8rem,5vw,3rem)}
+.s-lead{margin-top:1.15rem;color:rgba(245,241,232,.8);max-width:56ch}
+.light .s-lead{color:var(--tinta-2)}
+.hr-oro{height:1px;background:linear-gradient(90deg,var(--oro),rgba(201,168,96,0));margin:2.6rem 0}
+.light .hr-oro{background:linear-gradient(90deg,var(--oro-os),rgba(167,140,85,0))}
+
+/* ---------- cifras ---------- */
+.cifras{display:grid;gap:1px;background:rgba(201,168,96,.24);margin-top:3rem;border:1px solid rgba(201,168,96,.24)}
+@media(min-width:760px){.cifras{grid-template-columns:repeat(3,1fr)}}
+.cifra{background:var(--navy);padding:clamp(1.6rem,4vw,2.4rem);display:flex;flex-direction:column}
+.cifra .n{font-family:var(--serif);font-size:clamp(3rem,10vw,4.4rem);line-height:1;color:var(--oro-cl);
+  letter-spacing:-.03em}
+.cifra .t{margin-top:1rem;font-size:.98rem;color:rgba(245,241,232,.88)}
+.cifra .f{margin-top:auto;padding-top:1.4rem;font-size:.73rem;letter-spacing:.05em;color:rgba(143,184,232,.9)}
+.barras{margin-top:3rem;border:1px solid rgba(201,168,96,.24);padding:clamp(1.5rem,4vw,2.2rem)}
+.barras h3{font-size:1.12rem;font-family:var(--sans);font-weight:600;letter-spacing:0}
+.bar-row{margin-top:1.5rem}
+.bar-lab{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;font-size:.9rem}
+.bar-lab b{font-family:var(--serif);font-size:1.5rem;font-weight:600;letter-spacing:-.02em}
+.bar-track{margin-top:.5rem;height:10px;background:rgba(245,241,232,.1)}
+.bar-fill{height:100%;display:block}
+.f-oro{background:var(--oro)}
+.f-hielo{background:var(--hielo)}
+.pie{margin-top:1.6rem;font-size:.76rem;color:rgba(143,184,232,.86);letter-spacing:.02em}
+.light .pie{color:var(--tinta-2)}
+
+/* ---------- panel ---------- */
+.s-luz .eyebrow{color:#7A6231}
+.s-luz .eyebrow::before{background:var(--oro-os)}
+.aviso{margin-top:2.2rem;border-left:3px solid var(--oro-os);background:rgba(11,30,60,.055);
+  padding:1.15rem 1.25rem;max-width:62ch}
+.aviso b{font-weight:600}
+.aviso p+p{margin-top:.6rem}
+.aviso .chico{font-size:.9rem;color:var(--tinta-2)}
+.panel-zona{margin-top:2.4rem}
+.panel-zona .aviso{margin-top:0}
+@media(min-width:1040px){
+  .panel-zona{display:grid;grid-template-columns:minmax(0,1fr) minmax(290px,350px);
+    gap:2.6rem;align-items:start}
+  .panel-zona .panel{grid-column:1;grid-row:1;margin-top:0}
+  .panel-zona .aviso{grid-column:2;grid-row:1;position:sticky;top:100px}
+}
+.panel{margin-top:1.8rem;background:#fff;border:1px solid rgba(11,30,60,.16);
+  box-shadow:0 22px 60px -34px rgba(7,21,39,.55)}
+.panel-top{display:flex;flex-wrap:wrap;gap:.75rem 1.2rem;align-items:center;justify-content:space-between;
+  padding:1.1rem clamp(1.1rem,3.5vw,2rem);border-bottom:1px solid rgba(11,30,60,.14)}
+.paso{font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;color:var(--tinta-2)}
+.paso b{color:var(--tinta);font-weight:600}
+.prog{flex:1 1 160px;min-width:120px;height:4px;background:rgba(11,30,60,.12)}
+.prog i{display:block;height:100%;background:var(--oro-os);width:10%;transition:width .3s ease}
+.panel-body{padding:clamp(1.3rem,4vw,2.2rem)}
+.escala-nota{font-size:.82rem;color:var(--tinta-2);margin-bottom:1.4rem}
+fieldset.q{border:0;padding:0;margin:0 0 2.2rem}
+.js fieldset.q{display:none;margin:0}
+.js fieldset.q.on{display:block}
+.q legend{padding:0;display:block;width:100%}
+.q-meta{display:block;font-size:.71rem;letter-spacing:.17em;text-transform:uppercase;
+  color:#7A6231;margin-bottom:.75rem}
+.q-txt{display:block;font-family:var(--serif);font-size:clamp(1.25rem,4.4vw,1.85rem);
+  line-height:1.2;color:var(--tinta);max-width:30ch}
+.opts{margin-top:1.5rem;display:grid;gap:.5rem}
+.opt{position:relative;display:flex;align-items:center;gap:.9rem;min-height:52px;
+  padding:.75rem 1rem;border:1px solid rgba(11,30,60,.46);cursor:pointer;background:#fff;
+  transition:border-color .15s ease,background .15s ease}
+.opt:hover{border-color:var(--navy);background:rgba(11,30,60,.03)}
+.opt input{position:absolute;opacity:0;width:1px;height:1px;margin:0}
+.dot{flex:none;width:20px;height:20px;border:1.5px solid var(--tinta-2);border-radius:50%;
+  display:grid;place-items:center}
+.dot::after{content:"";width:10px;height:10px;border-radius:50%;background:var(--navy);transform:scale(0);
+  transition:transform .15s ease}
+.opt-t{flex:1;font-size:1rem}
+.opt-v{flex:none;font-family:var(--serif);font-size:.98rem;color:var(--tinta-2);
+  font-variant-numeric:tabular-nums}
+.opt input:checked ~ .dot{border-color:var(--navy);border-width:2px}
+.opt input:checked ~ .dot::after{transform:scale(1)}
+.opt input:checked ~ .opt-t{font-weight:600}
+.opt input:checked ~ .opt-v{color:var(--tinta);font-weight:600}
+.opt:has(input:checked){border-color:var(--navy);border-left-width:4px;padding-left:calc(1rem - 3px);
+  background:rgba(201,168,96,.10)}
+.opt input:focus-visible ~ .dot{outline:2px solid var(--navy);outline-offset:3px}
+.opt:has(input:focus-visible){outline:2px solid var(--navy);outline-offset:2px}
+.panel-nav{display:flex;flex-wrap:wrap;gap:.7rem;align-items:center;
+  margin-top:1.9rem;padding-top:1.5rem;border-top:1px solid rgba(11,30,60,.14)}
+.js .panel-nav{display:flex}
+.btn-nav{min-height:50px;padding:.85rem 1.5rem;border:1px solid var(--navy);background:var(--navy);
+  color:var(--marfil);font-size:.8rem;letter-spacing:.13em;text-transform:uppercase;font-weight:600;
+  cursor:pointer}
+.btn-nav:hover{background:#16305A}
+.btn-ghost{background:none;color:var(--tinta);border-color:rgba(11,30,60,.3)}
+.btn-ghost:hover{background:rgba(11,30,60,.06)}
+.aviso-vivo{flex:1 1 100%;font-size:.88rem;color:#8A3A2A;min-height:1.35rem}
+.nojs-nota{font-size:.88rem;color:var(--tinta-2);margin-top:1.5rem;padding-top:1.2rem;
+  border-top:1px solid rgba(11,30,60,.14);display:none}
+
+/* ---------- resultado ---------- */
+.res{display:none;margin-top:2.6rem}
+.res.on{display:block}
+.res-top{background:var(--navy);color:var(--marfil);padding:clamp(1.5rem,4vw,2.4rem)}
+.res-n{font-family:var(--serif);font-size:clamp(3.6rem,14vw,5.6rem);line-height:.95;
+  color:var(--oro-cl);letter-spacing:-.03em}
+.res-n small{font-family:var(--sans);font-size:.9rem;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(245,241,232,.7);display:block;margin-top:.9rem;line-height:1.5}
+.res-lead{margin-top:1.3rem;max-width:48ch;color:rgba(245,241,232,.88)}
+.bloques{margin-top:2rem;display:grid;gap:.95rem}
+.bl-row{display:grid;grid-template-columns:1fr auto;gap:.4rem 1rem;align-items:baseline}
+.bl-nom{font-size:.92rem;color:rgba(245,241,232,.9)}
+.bl-val{font-family:var(--serif);font-size:1.15rem;font-variant-numeric:tabular-nums;color:var(--oro-cl)}
+.bl-track{grid-column:1/-1;height:8px;background:rgba(245,241,232,.12)}
+.bl-fill{height:100%;background:var(--oro);display:block;width:0;transition:width .5s ease}
+.res-foco{margin-top:2rem;padding-top:1.5rem;border-top:1px solid rgba(201,168,96,.3);
+  font-family:var(--serif);font-size:clamp(1.1rem,3.4vw,1.4rem);color:var(--marfil);max-width:34ch}
+.res-bajo{background:#16305A;color:var(--marfil);padding:clamp(1.5rem,4vw,2.4rem)}
+.res-bajo h3{font-family:var(--serif);font-size:clamp(1.5rem,4.6vw,2.1rem);max-width:18ch}
+.res-bajo p{margin-top:1.1rem;max-width:50ch;color:rgba(245,241,232,.88)}
+.res-acc{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:1.8rem}
+
+/* ---------- instrumento ---------- */
+.tabla{margin-top:2.8rem;border-top:1px solid rgba(201,168,96,.3)}
+.fila{display:grid;grid-template-columns:2.2rem 1fr auto;gap:.5rem 1rem;align-items:center;
+  padding:1.05rem 0;border-bottom:1px solid rgba(245,241,232,.13)}
+.fila .l{font-family:var(--serif);font-size:1.35rem;color:var(--oro);line-height:1}
+.fila .n{font-size:1rem}
+.fila .d{font-size:.82rem;color:rgba(143,184,232,.9);letter-spacing:.04em;white-space:nowrap;
+  font-variant-numeric:tabular-nums}
+.fila .t{grid-column:2/-1;height:6px;background:rgba(245,241,232,.12)}
+.fila .t i{display:block;height:100%;background:var(--oro)}
+.fila.tot{border-bottom:0;padding-top:1.4rem}
+.fila.tot .n{font-weight:600}
+#instrumento{overflow:hidden}
+#instrumento .wrap{position:relative;z-index:3}
+.scrim-tex{position:absolute;inset:0;z-index:2;background:linear-gradient(180deg,rgba(7,21,39,.955) 0%,rgba(7,21,39,.90) 50%,rgba(7,21,39,.97) 100%)}
+
+/* ---------- entrega ---------- */
+.grid-4{display:grid;gap:1px;background:rgba(201,168,96,.24);margin-top:3rem;
+  border:1px solid rgba(201,168,96,.24)}
+@media(min-width:700px){.grid-4{grid-template-columns:1fr 1fr}}
+@media(min-width:1080px){.grid-4{grid-template-columns:repeat(4,1fr)}}
+.tarjeta{background:var(--card);padding:clamp(1.5rem,3.6vw,2rem)}
+.tarjeta .num{font-family:var(--serif);font-size:.9rem;color:var(--oro);letter-spacing:.1em}
+.tarjeta h3{margin-top:.8rem;font-size:1.32rem}
+.tarjeta p{margin-top:.85rem;font-size:.94rem;color:rgba(245,241,232,.85)}
+.tarjeta .cond{margin-top:1rem;font-size:.82rem;color:var(--hielo);border-top:1px solid rgba(201,168,96,.28);
+  padding-top:.8rem}
+
+/* ---------- objeciones ---------- */
+.objs{margin-top:3rem;display:grid;gap:1.4rem}
+@media(min-width:820px){.objs{grid-template-columns:1fr 1fr}}
+.obj{border:1px solid rgba(201,168,96,.28);padding:clamp(1.4rem,3.5vw,1.9rem);background:var(--navy)}
+.obj.destacada{border-color:var(--oro);background:var(--card)}
+@media(min-width:820px){.obj.destacada{grid-column:1/-1}}
+.obj q{display:block;font-family:var(--serif);font-size:clamp(1.2rem,3.6vw,1.6rem);color:var(--oro-cl);
+  quotes:"«" "»";line-height:1.2}
+.obj p{margin-top:1rem;color:rgba(245,241,232,.87);font-size:.97rem;max-width:62ch}
+.obj .rot{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(143,184,232,.85);
+  display:block;margin-bottom:.9rem}
+
+/* ---------- lexico ---------- */
+.lex{display:grid;gap:1px;background:rgba(201,168,96,.24);margin-top:2.4rem;
+  border:1px solid rgba(201,168,96,.24)}
+@media(min-width:720px){.lex{grid-template-columns:repeat(3,1fr)}}
+.lex div{background:var(--deep);padding:1.3rem 1.4rem}
+.lex dt{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--oro)}
+.lex dd{margin:.6rem 0 0;font-family:var(--serif);font-size:1.2rem}
+.lex dd.mkt{font-family:var(--sans);margin-top:.5rem;font-size:.85rem;color:rgba(143,184,232,.9);line-height:1.5}
+
+/* ---------- agenda ---------- */
+.agenda{position:relative;overflow:hidden;padding:clamp(4.5rem,11vw,8rem) 0}
+.agenda .hero-media img{object-position:center 55%}
+.agenda .wrap{position:relative;z-index:3}
+.agenda h2{max-width:16ch}
+.agenda-nota{margin-top:1.6rem;max-width:52ch;font-size:.92rem;color:rgba(143,184,232,.95);
+  border-left:2px solid var(--oro);padding-left:1rem}
+.agenda-vivo{margin-top:1.1rem;font-size:.92rem;color:var(--oro-cl);min-height:1.4rem}
+
+/* ---------- footer ---------- */
+footer{background:#050F1D;padding:clamp(2.8rem,6vw,4rem) 0;border-top:1px solid rgba(201,168,96,.22)}
+.f-grid{display:flex;flex-wrap:wrap;gap:2rem;justify-content:space-between;align-items:flex-start}
+.f-txt{font-size:.8rem;color:rgba(245,241,232,.6);max-width:60ch}
+.f-txt p+p{margin-top:.7rem}
+
+/* ---------- reveal ---------- */
+.js .rv{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
+.js .rv.vis{opacity:1;transform:none}
+
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .bgv{display:none}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .js .rv{opacity:1!important;transform:none!important}
+  .bl-fill,.prog i{transition:none!important}
+}
+</style>
+<noscript><style>
+  .rv{opacity:1!important;transform:none!important}
+  fieldset.q{display:block!important;margin:0 0 2.2rem!important}
+  .panel-nav,.panel-top{display:none!important}
+  .nojs-nota{display:block!important}
+</style></noscript>
+</head>
+<body>
+<a class="skip" href="#panel">Ir al panel de diez preguntas</a>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="lockup" href="#top">
+      <span class="lk-name">Hyperion</span>
+      <span class="lk-sub">Advisory</span>
+      <span class="lk-arc" aria-hidden="true"></span>
+    </a>
+    <nav class="nav-links" aria-label="Secciones">
+      <a href="#panel">El panel</a>
+      <a href="#instrumento">El instrumento</a>
+      <a href="#entrega">Qué entrega</a>
+      <a href="#objeciones">Objeciones</a>
+    </nav>
+    <a class="nav-cta" href="#agenda">Agendar</a>
+  </div>
+</header>
+
+<main>
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="hero-media">
+    <img src="img/gal/sala.jpg" width="1376" height="768" alt="Sala de directorio vacía a la hora azul, con la ciudad al fondo." fetchpriority="high">
+    <video class="bgv" id="bgv" muted loop playsinline autoplay preload="metadata" aria-hidden="true">
+      <source src="img/vid/sala.mp4" type="video/mp4">
+    </video>
+    <div class="scrim" aria-hidden="true"></div>
+    <div class="scrim2" aria-hidden="true"></div>
+  </div>
+  <div class="wrap">
+    <!-- COPY PROPUESTO -->
+    <p class="eyebrow">Diagnóstico de Sesgos de Directorio · Producto de entrada</p>
+    <h1>Los números se auditan. <span class="op">Las decisiones, casi nunca.</span></h1>
+    <!-- COPY PROPUESTO -->
+    <p class="hero-sub">Su empresa audita sus estados financieros una vez al año. Nadie audita el proceso por el cual su directorio convierte información en compromiso de capital. Ese proceso también se mide.</p>
+    <p class="hero-q">¿Cuántas respuestas distintas recibe?</p>
+    <div class="cta-row">
+      <!-- COPY PROPUESTO -->
+      <a class="btn btn-oro" href="#panel">Responder las diez preguntas</a>
+      <!-- COPY PROPUESTO -->
+      <a class="btn btn-linea" href="#entrega">Qué entrega el diagnóstico</a>
+    </div>
+  </div>
+  <span class="arco" aria-hidden="true"></span>
+</section>
+
+<!-- ============ EVIDENCIA ============ -->
+<section class="s-navy" id="evidencia">
+  <div class="wrap">
+    <div class="s-head rv">
+      <!-- COPY PROPUESTO -->
+      <p class="eyebrow">Por qué medir el proceso</p>
+      <!-- COPY PROPUESTO -->
+      <h2>El resultado depende más de cómo decide la mesa que de la calidad del análisis.</h2>
+      <!-- COPY PROPUESTO -->
+      <p class="s-lead">No es una intuición de consultor. Es lo que muestran los estudios que sostienen la categoría, y es la razón por la que un diagnóstico de proceso tiene sentido financiero antes que organizacional.</p>
+    </div>
+
+    <div class="cifras rv">
+      <div class="cifra">
+        <p class="n">39%</p>
+        <p class="t">de la varianza del resultado se explica por la calidad del proceso. El análisis explica solo 8%.</p>
+        <p class="f">Lovallo &amp; Sibony · McKinsey Quarterly</p>
+      </div>
+      <div class="cifra">
+        <p class="n">55%</p>
+        <p class="t">de diferencia mediana entre profesionales evaluando exactamente el mismo caso. Esperaban 10%.</p>
+        <p class="f">Kahneman, Sibony &amp; Sunstein</p>
+      </div>
+      <div class="cifra">
+        <p class="n">28%</p>
+        <p class="t">de 2.207 ejecutivos calificó como buena la calidad de sus decisiones estratégicas.</p>
+        <p class="f">Lovallo &amp; Sibony · McKinsey Quarterly</p>
+      </div>
+    </div>
+
+    <div class="barras rv">
+      <!-- COPY PROPUESTO -->
+      <h3>Qué explica la varianza del resultado</h3>
+      <div class="bar-row">
+        <p class="bar-lab"><span>Calidad del proceso decisional</span><b>39%</b></p>
+        <div class="bar-track"><span class="bar-fill f-oro" style="width:39%"></span></div>
+      </div>
+      <div class="bar-row">
+        <p class="bar-lab"><span>Calidad del análisis</span><b>8%</b></p>
+        <div class="bar-track"><span class="bar-fill f-hielo" style="width:8%"></span></div>
+      </div>
+      <p class="pie">Fuente: Lovallo &amp; Sibony (McKinsey Quarterly). Cifras expresadas tal como aparecen en el dossier de evidencia de Hyperion.</p>
+    </div>
+
+    <div class="barras rv">
+      <!-- COPY PROPUESTO -->
+      <h3>Dos cifras de apoyo, del mismo cuerpo de evidencia</h3>
+      <div class="bar-row">
+        <p class="bar-lab"><span>Anclaje presupuestario: correlación de la asignación de capital año a año, durante veinte años</span><b>90%</b></p>
+        <div class="bar-track"><span class="bar-fill f-oro" style="width:90%"></span></div>
+      </div>
+      <div class="bar-row">
+        <p class="bar-lab"><span>Unidades zombi: negocios no rentables y demandantes de caja que sobrevivieron una década</span><b>80%</b></p>
+        <div class="bar-track"><span class="bar-fill f-hielo" style="width:80%"></span></div>
+      </div>
+      <p class="pie">Fuentes: Lovallo &amp; Sibony (McKinsey Quarterly) · Kahneman, Sibony &amp; Sunstein · Flyvbjerg · Malmendier &amp; Tate (NBER).</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PANEL ============ -->
+<section class="s-luz light" id="panel">
+  <div class="wrap">
+    <div class="s-head rv">
+      <!-- COPY PROPUESTO -->
+      <p class="eyebrow">Panel corto · demostración</p>
+      <!-- COPY PROPUESTO -->
+      <h2>Diez preguntas que no tienen salida elegante.</h2>
+      <!-- COPY PROPUESTO -->
+      <p class="s-lead">Responda por su propia mesa, con lo que realmente ocurre y no con lo que debería ocurrir. Al terminar verá un resultado indicativo por bloque. Nada se envía a ninguna parte: el cálculo ocurre en su navegador.</p>
+    </div>
+
+    <div class="panel-zona rv">
+    <div class="aviso">
+      <p><b>Versión corta de demostración. El instrumento completo son 45 ítems y el Índice de Vulnerabilidad Decisional lo calcula Hyperion.</b></p>
+      <!-- COPY PROPUESTO -->
+      <p class="chico">Cómo se calcula lo que verá: promedio simple de sus diez respuestas, en escala de 0 a 100. Sin ponderación. La ponderación real por bloque —15%, 15%, 13%, 12%, 15%, 20% y 10%— se aplica sobre los 45 ítems del instrumento, no aquí. Lo que obtenga en esta página no es el IVD y no debe presentarse como tal.</p>
+    </div>
+
+    <div class="panel">
+      <div class="panel-top">
+        <p class="paso" id="paso">Pregunta <b><span id="paso-n">1</span></b> de 10</p>
+        <div class="prog" role="presentation" aria-hidden="true"><i id="prog-i"></i></div>
+      </div>
+      <div class="panel-body">
+        <!-- COPY PROPUESTO -->
+        <p class="escala-nota">Escala de frecuencia: Nunca (0) · Rara vez (25) · A veces (50) · Con frecuencia (75) · Siempre (100). El valor de cada opción se muestra a la derecha.</p>
+        <form id="form" novalidate>
+          <!-- COPY PROPUESTO -->
+          <fieldset class="q on" data-bloque="A" data-n="1" id="fs1">
+            <legend tabindex="-1" id="lg1">
+              <span class="q-meta">01 de 10 · Bloque A · Sesgos de acción</span>
+              <span class="q-txt">Los proyectos que su directorio aprueba terminan costando más, o tardando más, de lo que se proyectó al aprobarlos.</span>
+            </legend>
+            <div class="opts">
+              <label class="opt"><input type="radio" name="q1" value="0"><span class="dot" aria-hidden="true"></span><span class="opt-t">Nunca</span><span class="opt-v" aria-hidden="true">0</span></label>
+              <label class="opt"><input type="radio" name="q1" value="25"><span class="dot" aria-hidden="true"></span><span class="opt-t">Rara vez</span><span class="opt-v" aria-hidden="true">25</span></label>
+              <label class="opt"><input type="radio" name="q1" value="50"><span class="dot" aria-hidden="true"></span><span class="opt-t">A veces</span><span class="opt-v" aria-hidden="true">50</span></label>
+              <label class="opt"><input type="radio" name="q1" value="75"><span class="dot" aria-hidden="true"></span><span class="opt-t">Con frecuencia</span><span class="opt-v" aria-hidden="true">75</span></label>
+              <label class="opt"><input type="radio" name="q1" value="100"><span class="dot" aria-hidden="true"></span><span class="opt-t">Siempre</span><span class="opt-v" aria-hidden="true">100</span></label>
+            </div>
+          </fieldset>
+          <!-- COPY PROPUESTO -->
+          <fieldset class="q" data-bloque="A" data-n="2" id="fs2">
+            <legend tabindex="-1" id="lg2">
+              <span class="q-meta">02 de 10 · Bloque A · Sesgos de acción</span>
+              <span class="q-txt">Un compromiso de capital relevante se aprueba en la misma sesión en que se presenta por primera vez.</span>
+            </legend>
+            <div class="opts">
+              <label class="opt"><input type="radio" name="q2" value="0"><span class="dot" aria-hidden="true"></span><span class="opt-t">Nunca</span><span class="opt-v" aria-hidden="true">0</span></label>
+              <label class="opt"><input type="radio" name="q2" value="25"><span class="dot" aria-hidden="true"></span><span class="opt-t">Rara vez</span><span class="opt-v" aria-hidden="true">25</span></label>
+              <label class="opt"><input type="radio" name="q2" value="50"><span class="dot" aria-hidden="true"></span><span class="opt-t">A veces</span><span class="opt-v" aria-hidden="true">50</span></label>
+              <label class="opt"><input type="radio" name="q2" value="75"><span class="dot" aria-hidden="true"></span><span class="opt-t">Con frecuencia</span><span class="opt-v" aria-hidden="true">75</span></label>
+              <label class="opt"><input type="radio" name="q2" value="100"><span class="dot" aria-hidden="true"></span><span class="opt-t">Siempre</span><span class="opt-v" aria-hidden="true">100</span></label>
+            </div>
+          </fieldset>
+          <!-- COPY PROPUESTO -->
+          <fieldset class="q" data-bloque="B" data-n="3" id="fs3">
+            <legend tabindex="-1" id="lg3">
+              <span class="q-meta">03 de 10 · Bloque B · Sesgos de estabilidad</span>
+              <span class="q-txt">El presupuesto de cada año se construye sobre el del año anterior, ajustado por un porcentaje.</span>
+            </legend>
+            <div class="opts">
+              <label class="opt"><input type="radio" name="q3" value="0"><span class="dot" aria-hidden="true"></span><span class="opt-t">Nunca</span><span class="opt-v" aria-hidden="true">0</span></label>
+              <label class="opt"><input type="radio" name="q3" value="25"><span class="dot" aria-hidden="true"></span><span class="opt-t">Rara vez</span><span class="opt-v" aria-hidden="true">25</span></label>
+              <label class="opt"><input type="radio" name="q3" value="50"><span class="dot" aria-hidden="true"></span><span class="opt-t">A veces</span><span class="opt-v" aria-hidden="true">50</span></label>
+              <label class="opt"><input type="radio" name="q3" value="75"><span class="dot" aria-hidden="true"></span><span class="opt-t">Con frecuencia</span><span class="opt-v" aria-hidden="true">75</span></label>
+              <label class="opt"><input type="radio" name="q3" value="100"><span class="dot" aria-hidden="true"></span><span class="opt-t">Siempre</span><span class="opt-v" aria-hidden="true">100</span></label>
+            </div>
+          </fieldset>
+          <!-- COPY PROPUESTO -->
+          <fieldset class="q" data-bloque="C" data-n="4" id="fs4">
+            <legend tabindex="-1" id="lg4">
+              <span class="q-meta">04 de 10 · Bloque C · Sesgos de patrón</span>
+              <span class="q-txt">La información que llega a la mesa la selecciona la misma persona que propone la decisión.</span>
+            </legend>
+            <div class="opts">
+              <label class="opt"><input type="radio" name="q4" value="0"><span class="dot" aria-hidden="true"></span><span class="opt-t">Nunca</span><span class="opt-v" aria-hidden="true">0</span></label>
+              <label class="opt"><input type="radio" name="q4" value="25"><span class="dot" aria-hidden="true"></span><span class="opt-t">Rara vez</span><span class="opt-v" aria-hidden="true">25</span></label>
+              <label class="opt"><input type="radio" name="q4" value="50"><span class="dot" aria-hidden="true"></span><span class="opt-t">A veces</span><span class="opt-v" aria-hidden="true">50</span></label>
+              <label class="opt"><input type="radio" name="q4" value="75"><span class="dot" aria-hidden="true"></span><span class="opt-t">Con frecuencia</span><span class="opt-v" aria-hidden="true">75</span></label>
+              <label class="opt"><input type="radio" name="q4" value="100"><span class="dot" aria-hidden="true"></span><span class="opt-t">Siempre</span><span class="opt-v" aria-hidden="true">100</span></label>
+            </div>
+          </fieldset>
+          <!-- COPY PROPUESTO -->
+          <fieldset class="q" data-bloque="D" data-n="5" id="fs5">
+            <legend tabindex="-1" id="lg5">
+              <span class="q-meta">05 de 10 · Bloque D · Sesgos de interés</span>
+              <span class="q-txt">Quien propone una inversión es también quien estima sus beneficios y quien administrará su presupuesto.</span>
+            </legend>
+            <div class="opts">
+              <label class="opt"><input type="radio" name="q5" value="0"><span class="dot" aria-hidden="true"></span><span class="opt-t">Nunca</span><span class="opt-v" aria-hidden="true">0</span></label>
+              <label class="opt"><input type="radio" name="q5" value="25"><span class="dot" aria-hidden="true"></span><span class="opt-t">Rara vez</span><span class="opt-v" aria-hidden="true">25</span></label>
+              <label class="opt"><input type="radio" name="q5" value="50"><span class="dot" aria-hidden="true"></span><span class="opt-t">A veces</span><span class="opt-v" aria-hidden="true">50</span></label>
+              <label class="opt"><input type="radio" name="q5" value="75"><span class="dot" aria-hidden="true"></span><span class="opt-t">Con frecuencia</span><span class="opt-v" aria-hidden="true">75</span></label>
+              <label class="opt"><input type="radio" name="q5" value="100"><span class="dot" aria-hidden="true"></span><span class="opt-t">Siempre</span><span class="opt-v" aria-hidden="true">100</span></label>
+            </div>
+          </fieldset>
+          <!-- COPY PROPUESTO -->
+          <fieldset class="q" data-bloque="E" data-n="6" id="fs6">
+            <legend tabindex="-1" id="lg6">
+              <span class="q-meta">06 de 10 · Bloque E · Sesgos sociales</span>
+              <span class="q-txt">La posición del fundador o del presidente se conoce antes de que opinen los demás directores.</span>
+            </legend>
+            <div class="opts">
+              <label class="opt"><input type="radio" name="q6" value="0"><span class="dot" aria-hidden="true"></span><span class="opt-t">Nunca</span><span class="opt-v" aria-hidden="true">0</span></label>
+              <label class="opt"><input type="radio" name="q6" value="25"><span class="dot" aria-hidden="true"></span><span class="opt-t">Rara vez</span><span class="opt-v" aria-hidden="true">25</span></label>
+              <label class="opt"><input type="radio" name="q6" value="50"><span class="dot" aria-hidden="true"></span><span class="opt-t">A veces</span><span class="opt-v" aria-hidden="true">50</span></label>
+              <label class="opt"><input type="radio" name="q6" value="75"><span class="dot" aria-hidden="true"></span><span class="opt-t">Con frecuencia</span><span class="opt-v" aria-hidden="true">75</span></label>
+              <label class="opt"><input type="radio" name="q6" value="100"><span class="dot" aria-hidden="true"></span><span class="opt-t">Siempre</span><span class="opt-v" aria-hidden="true">100</span></label>
+            </div>
+          </fieldset>
+          <!-- COPY PROPUESTO -->
+          <fieldset class="q" data-bloque="E" data-n="7" id="fs7">
+            <legend tabindex="-1" id="lg7">
+              <span class="q-meta">07 de 10 · Bloque E · Sesgos sociales</span>
+              <span class="q-txt">Una objeción que plantea un solo director se retira cuando nadie más la respalda en la mesa.</span>
+            </legend>
+            <div class="opts">
+              <label class="opt"><input type="radio" name="q7" value="0"><span class="dot" aria-hidden="true"></span><span class="opt-t">Nunca</span><span class="opt-v" aria-hidden="true">0</span></label>
+              <label class="opt"><input type="radio" name="q7" value="25"><span class="dot" aria-hidden="true"></span><span class="opt-t">Rara vez</span><span class="opt-v" aria-hidden="true">25</span></label>
+              <label class="opt"><input type="radio" name="q7" value="50"><span class="dot" aria-hidden="true"></span><span class="opt-t">A veces</span><span class="opt-v" aria-hidden="true">50</span></label>
+              <label class="opt"><input type="radio" name="q7" value="75"><span class="dot" aria-hidden="true"></span><span class="opt-t">Con frecuencia</span><span class="opt-v" aria-hidden="true">75</span></label>
+              <label class="opt"><input type="radio" name="q7" value="100"><span class="dot" aria-hidden="true"></span><span class="opt-t">Siempre</span><span class="opt-v" aria-hidden="true">100</span></label>
+            </div>
+          </fieldset>
+          <!-- COPY PROPUESTO -->
+          <fieldset class="q" data-bloque="F" data-n="8" id="fs8">
+            <legend tabindex="-1" id="lg8">
+              <span class="q-meta">08 de 10 · Bloque F · Higiene de proceso</span>
+              <span class="q-txt">El acta registra el acuerdo alcanzado, pero no el criterio ni los supuestos que lo sustentaron.</span>
+            </legend>
+            <div class="opts">
+              <label class="opt"><input type="radio" name="q8" value="0"><span class="dot" aria-hidden="true"></span><span class="opt-t">Nunca</span><span class="opt-v" aria-hidden="true">0</span></label>
+              <label class="opt"><input type="radio" name="q8" value="25"><span class="dot" aria-hidden="true"></span><span class="opt-t">Rara vez</span><span class="opt-v" aria-hidden="true">25</span></label>
+              <label class="opt"><input type="radio" name="q8" value="50"><span class="dot" aria-hidden="true"></span><span class="opt-t">A veces</span><span class="opt-v" aria-hidden="true">50</span></label>
+              <label class="opt"><input type="radio" name="q8" value="75"><span class="dot" aria-hidden="true"></span><span class="opt-t">Con frecuencia</span><span class="opt-v" aria-hidden="true">75</span></label>
+              <label class="opt"><input type="radio" name="q8" value="100"><span class="dot" aria-hidden="true"></span><span class="opt-t">Siempre</span><span class="opt-v" aria-hidden="true">100</span></label>
+            </div>
+          </fieldset>
+          <!-- COPY PROPUESTO -->
+          <fieldset class="q" data-bloque="F" data-n="9" id="fs9">
+            <legend tabindex="-1" id="lg9">
+              <span class="q-meta">09 de 10 · Bloque F · Higiene de proceso</span>
+              <span class="q-txt">Se vota una inversión sin que nadie haya tenido el encargo formal de argumentar en contra.</span>
+            </legend>
+            <div class="opts">
+              <label class="opt"><input type="radio" name="q9" value="0"><span class="dot" aria-hidden="true"></span><span class="opt-t">Nunca</span><span class="opt-v" aria-hidden="true">0</span></label>
+              <label class="opt"><input type="radio" name="q9" value="25"><span class="dot" aria-hidden="true"></span><span class="opt-t">Rara vez</span><span class="opt-v" aria-hidden="true">25</span></label>
+              <label class="opt"><input type="radio" name="q9" value="50"><span class="dot" aria-hidden="true"></span><span class="opt-t">A veces</span><span class="opt-v" aria-hidden="true">50</span></label>
+              <label class="opt"><input type="radio" name="q9" value="75"><span class="dot" aria-hidden="true"></span><span class="opt-t">Con frecuencia</span><span class="opt-v" aria-hidden="true">75</span></label>
+              <label class="opt"><input type="radio" name="q9" value="100"><span class="dot" aria-hidden="true"></span><span class="opt-t">Siempre</span><span class="opt-v" aria-hidden="true">100</span></label>
+            </div>
+          </fieldset>
+          <!-- COPY PROPUESTO -->
+          <fieldset class="q" data-bloque="G" data-n="10" id="fs10">
+            <legend tabindex="-1" id="lg10">
+              <span class="q-meta">10 de 10 · Bloque G · Condiciones de decisión</span>
+              <span class="q-txt">Los puntos de mayor monto se discuten al final de la sesión, con el tiempo que quedó.</span>
+            </legend>
+            <div class="opts">
+              <label class="opt"><input type="radio" name="q10" value="0"><span class="dot" aria-hidden="true"></span><span class="opt-t">Nunca</span><span class="opt-v" aria-hidden="true">0</span></label>
+              <label class="opt"><input type="radio" name="q10" value="25"><span class="dot" aria-hidden="true"></span><span class="opt-t">Rara vez</span><span class="opt-v" aria-hidden="true">25</span></label>
+              <label class="opt"><input type="radio" name="q10" value="50"><span class="dot" aria-hidden="true"></span><span class="opt-t">A veces</span><span class="opt-v" aria-hidden="true">50</span></label>
+              <label class="opt"><input type="radio" name="q10" value="75"><span class="dot" aria-hidden="true"></span><span class="opt-t">Con frecuencia</span><span class="opt-v" aria-hidden="true">75</span></label>
+              <label class="opt"><input type="radio" name="q10" value="100"><span class="dot" aria-hidden="true"></span><span class="opt-t">Siempre</span><span class="opt-v" aria-hidden="true">100</span></label>
+            </div>
+          </fieldset>
+        </form>
+
+        <div class="panel-nav" id="pnav">
+          <!-- COPY PROPUESTO -->
+          <button type="button" class="btn-nav btn-ghost" id="btn-atras" style="display:none">Atrás</button>
+          <!-- COPY PROPUESTO -->
+          <button type="button" class="btn-nav" id="btn-sig">Siguiente</button>
+          <p class="aviso-vivo" id="aviso-vivo" role="alert"></p>
+        </div>
+
+        <!-- COPY PROPUESTO -->
+        <p class="nojs-nota">Sin JavaScript el cálculo indicativo no se ejecuta. Las diez preguntas quedan visibles para leerlas completas. El instrumento real de 45 ítems lo administra Hyperion y no depende de esta página.</p>
+      </div>
+    </div>
+    </div>
+
+    <!-- ============ RESULTADO ============ -->
+    <div class="res" id="res">
+      <div class="res-top" id="res-foco" tabindex="-1">
+        <p class="sr" id="res-vivo" role="status" aria-live="polite"></p>
+        <!-- COPY PROPUESTO -->
+        <p class="eyebrow" style="color:#C9A860">Resultado indicativo</p>
+        <p class="res-n"><span id="res-n">0</span> <small>de 100 · promedio simple de sus diez respuestas</small></p>
+        <!-- COPY PROPUESTO -->
+        <p class="res-lead">No es el Índice de Vulnerabilidad Decisional. Es una señal construida con diez ítems de demostración y sin ponderación. Le dice dónde mirar, no cuánto le cuesta.</p>
+        <div class="bloques" id="bloques"></div>
+        <p class="res-foco" id="res-foco-txt"></p>
+      </div>
+      <div class="res-bajo">
+        <!-- COPY PROPUESTO -->
+        <h3>Usted respondió solo. Ahí está el límite.</h3>
+        <!-- COPY PROPUESTO -->
+        <p>El diferencial del Diagnóstico no es el cuestionario: es que mide el desacuerdo entre directores, no el promedio de la mesa. Una sola respuesta no puede producir esa medida. El Índice de Ruido requiere mínimo tres respuestas individuales; cuatro para informe completo.</p>
+        <!-- COPY PROPUESTO -->
+        <p>La pregunta con la que Hyperion abre una conversación con un directorio es esta: ¿cuántas respuestas distintas recibe? Usted acaba de dar una.</p>
+        <div class="res-acc">
+          <!-- COPY PROPUESTO -->
+          <a class="btn btn-oro" href="#agenda">Llevar esto a la mesa</a>
+          <!-- COPY PROPUESTO -->
+          <button type="button" class="btn btn-linea" id="btn-reset">Responder de nuevo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ INSTRUMENTO ============ -->
+<section class="s-deep" id="instrumento">
+  <div class="hero-media" aria-hidden="true">
+    <img src="img/gal/mesa.jpg" width="1376" height="768" alt="" loading="lazy">
+    <div class="scrim-tex"></div>
+  </div>
+  <div class="wrap">
+    <div class="s-head rv">
+      <!-- COPY PROPUESTO -->
+      <p class="eyebrow">El instrumento completo</p>
+      <!-- COPY PROPUESTO -->
+      <h2>Cuarenta y cinco ítems. Siete bloques. Cada director responde por separado.</h2>
+      <!-- COPY PROPUESTO -->
+      <p class="s-lead">Esta es la estructura real del Diagnóstico de Sesgos de Directorio, con el peso que cada bloque tiene en el Índice de Vulnerabilidad Decisional. Las diez preguntas de la página anterior son una muestra: no reemplazan ningún bloque ni reproducen su ponderación.</p>
+    </div>
+
+    <div class="tabla rv">
+      <div class="fila"><span class="l">A</span><span class="n">Sesgos de acción</span><span class="d">6 ítems · 15%</span><span class="t"><i style="width:15%"></i></span></div>
+      <div class="fila"><span class="l">B</span><span class="n">Sesgos de estabilidad</span><span class="d">7 ítems · 15%</span><span class="t"><i style="width:15%"></i></span></div>
+      <div class="fila"><span class="l">C</span><span class="n">Sesgos de patrón</span><span class="d">6 ítems · 13%</span><span class="t"><i style="width:13%"></i></span></div>
+      <div class="fila"><span class="l">D</span><span class="n">Sesgos de interés</span><span class="d">5 ítems · 12%</span><span class="t"><i style="width:12%"></i></span></div>
+      <div class="fila"><span class="l">E</span><span class="n">Sesgos sociales</span><span class="d">7 ítems · 15%</span><span class="t"><i style="width:15%"></i></span></div>
+      <div class="fila"><span class="l">F</span><span class="n">Higiene de proceso</span><span class="d">8 ítems · 20%</span><span class="t"><i style="width:20%"></i></span></div>
+      <div class="fila"><span class="l">G</span><span class="n">Condiciones de decisión</span><span class="d">6 ítems · 10%</span><span class="t"><i style="width:10%"></i></span></div>
+      <div class="fila tot"><span class="l" aria-hidden="true">·</span><span class="n">Total</span><span class="d">45 ítems · 100%</span></div>
+    </div>
+    <!-- COPY PROPUESTO -->
+    <p class="pie">El IVD es el promedio ponderado de los siete bloques, de 0 a 100, con bandas bajo, moderado, alto y crítico. La barra de cada fila representa el peso del bloque y lleva su valor escrito, no solo color.</p>
+  </div>
+</section>
+
+<!-- ============ ENTREGA ============ -->
+<section class="s-navy" id="entrega">
+  <div class="wrap">
+    <div class="s-head rv">
+      <!-- COPY PROPUESTO -->
+      <p class="eyebrow">Qué entrega el diagnóstico completo</p>
+      <!-- COPY PROPUESTO -->
+      <h2>Cuatro salidas. Una de ellas es la que abre la conversación.</h2>
+      <!-- COPY PROPUESTO -->
+      <p class="s-lead">La respuesta es individual y la devolución es agregada: el informe se abre por el desacuerdo, nunca por un ranking de directores.</p>
+    </div>
+
+    <div class="grid-4 rv">
+      <div class="tarjeta">
+        <p class="num">01</p>
+        <h3>Índice de Vulnerabilidad Decisional</h3>
+        <p>Promedio ponderado de los siete bloques, de 0 a 100. Bandas: bajo, moderado, alto, crítico.</p>
+        <p class="cond">45 ítems. Cada director responde por separado.</p>
+      </div>
+      <div class="tarjeta">
+        <p class="num">02</p>
+        <h3>Índice de Ruido</h3>
+        <p>Dispersión de las respuestas entre directores. Mide cuánto difiere la mesa de sí misma, no cuánto acierta.</p>
+        <p class="cond">Requiere mínimo tres respuestas. Cuatro para informe completo.</p>
+      </div>
+      <div class="tarjeta">
+        <p class="num">03</p>
+        <h3>Puntos ciegos</h3>
+        <p>Ítems donde el promedio tranquiliza pero el desacuerdo es alto. Suele ser el hallazgo que abre la conversación.</p>
+        <p class="cond">Depende del Índice de Ruido: sin tres respuestas, no existe.</p>
+      </div>
+      <div class="tarjeta">
+        <p class="num">04</p>
+        <h3>Plan 30/60/90</h3>
+        <p>Ocho prácticas correctivas seleccionadas de un catálogo de catorce, según el perfil de riesgo detectado.</p>
+        <p class="cond">Pre-mortem, contradictor formal, voto confidencial previo, bitácora.</p>
+      </div>
+    </div>
+
+    <div class="hr-oro rv"></div>
+    <div class="s-head rv">
+      <!-- COPY PROPUESTO -->
+      <h3 style="font-size:clamp(1.3rem,4vw,1.9rem)">Y después del diagnóstico</h3>
+      <!-- COPY PROPUESTO -->
+      <p class="s-lead">El diagnóstico abre. La <b>Arquitectura de decisión</b> instala el rediseño del ciclo de asignación de capital —clase de referencia, contradictor formal, voto confidencial previo, criterios explícitos, bitácora— en un proyecto de 3 a 6 meses. El <b>CFO fraccional</b> lo sostiene con presencia en comité y directorio: disciplina financiera más higiene de decisión.</p>
+      <!-- COPY PROPUESTO -->
+      <p class="pie">Los valores de cada línea no se publican en esta propuesta: el brief los entrega pendientes de definición.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ OBJECIONES ============ -->
+<section class="s-deep" id="objeciones">
+  <div class="wrap">
+    <div class="s-head rv">
+      <!-- COPY PROPUESTO -->
+      <p class="eyebrow">Lo que se dice en la mesa</p>
+      <!-- COPY PROPUESTO -->
+      <h2>Cinco reparos razonables, respondidos antes de la reunión.</h2>
+      <!-- COPY PROPUESTO -->
+      <p class="s-lead">Quien propone un diagnóstico a su directorio necesita tener estas respuestas listas. Aquí están, sin adornos.</p>
+    </div>
+
+    <div class="objs rv">
+      <div class="obj destacada">
+        <!-- COPY PROPUESTO -->
+        <span class="rot">La que más frena a quien lo propone</span>
+        <q>Suena a exponer a las personas</q>
+        <p>La respuesta es individual, la devolución es agregada y el informe se abre por el desacuerdo, nunca por un ranking de directores.</p>
+        <!-- COPY PROPUESTO -->
+        <p>Nadie recibe una nota. No hay un director peor evaluado que otro. Lo que se publica ante la mesa es dónde el grupo no está de acuerdo consigo mismo, y el sesgo es estructural: no es un defecto moral de quien decide.</p>
+      </div>
+
+      <div class="obj">
+        <q>Nuestro directorio funciona bien</q>
+        <p>No se discute el resultado, se mide el desacuerdo. Casi siempre la mesa cree estar más alineada de lo que está.</p>
+      </div>
+
+      <div class="obj">
+        <q>Ya tenemos auditoría y contraloría</q>
+        <p>Ambas revisan lo que ya ocurrió, expresado en números. Ninguna revisa cómo se llegó a comprometer el capital.</p>
+      </div>
+
+      <div class="obj">
+        <q>Esto es psicología, no gestión</q>
+        <p>El hallazgo central es financiero, no clínico. Proceso explica 39% de la varianza del resultado; el análisis, 8%.</p>
+        <p class="pie" style="margin-top:1rem">Fuente: Lovallo &amp; Sibony (McKinsey Quarterly).</p>
+      </div>
+
+      <div class="obj">
+        <span class="rot">La más difícil, y no la vamos a esconder</span>
+        <q>¿Y esto quién lo ha hecho antes en mi mercado?</q>
+        <p>La categoría es nueva en todos los mercados de habla hispana y no hay casos publicados. Se agrava fuera de Chile, donde tampoco existe red de referencias.</p>
+        <!-- COPY PROPUESTO -->
+        <p>Por eso esta página no muestra logotipos de clientes, testimonios ni apariciones en prensa: hoy no existen. Lo que sí puede revisar antes de decidir es el instrumento, su estructura de bloques y el cuerpo de evidencia que lo sostiene. Es todo lo que hay, y es verificable.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LEXICO ============ -->
+<section class="s-deep" style="padding-top:0" id="lexico">
+  <div class="wrap">
+    <div class="hr-oro"></div>
+    <!-- COPY PROPUESTO -->
+    <p class="eyebrow">Léxico por mercado</p>
+    <!-- COPY PROPUESTO -->
+    <h3 style="font-size:clamp(1.3rem,4vw,1.9rem);max-width:24ch">Esta versión está escrita para Chile. El nombre del órgano cambia y no es un detalle.</h3>
+    <dl class="lex rv">
+      <div>
+        <dt>Chile · Perú · Argentina · Uruguay</dt>
+        <dd>Directorio / Director</dd>
+        <dd class="mkt">Versión publicada en esta página.</dd>
+      </div>
+      <div>
+        <dt>España · México</dt>
+        <dd>Consejo de administración / Consejero</dd>
+        <dd class="mkt">El producto pasa a llamarse Diagnóstico de Sesgos del Consejo.</dd>
+      </div>
+      <div>
+        <dt>Colombia · Rep. Dominicana · Venezuela</dt>
+        <dd>Junta directiva / Miembro de junta</dd>
+        <dd class="mkt">Requiere versión de página propia, no traducción parcial.</dd>
+      </div>
+    </dl>
+  </div>
+</section>
+
+<!-- ============ AGENDA ============ -->
+<section class="agenda" id="agenda">
+  <div class="hero-media">
+    <img src="img/gal/silla.jpg" width="1376" height="768" alt="Una silla vacía en la cabecera de la mesa de directorio, con luz dorada rasante." loading="lazy">
+    <div class="scrim" aria-hidden="true"></div>
+    <div class="scrim2" aria-hidden="true"></div>
+  </div>
+  <div class="wrap">
+    <!-- COPY PROPUESTO -->
+    <p class="eyebrow">Siguiente paso</p>
+    <!-- COPY PROPUESTO -->
+    <h2>Tres directores respondiendo por separado. Ahí empieza la medida.</h2>
+    <!-- COPY PROPUESTO -->
+    <p class="s-lead">Una conversación para revisar si su mesa califica, cómo se administra el instrumento y qué recibe el directorio de vuelta. Sin material comercial: el instrumento y la evidencia.</p>
+    <div class="cta-row">
+      <!-- COPY PROPUESTO -->
+      <button type="button" class="btn btn-oro" id="btn-agenda">Agendar una conversación</button>
+      <!-- COPY PROPUESTO -->
+      <a class="btn btn-linea" href="#panel">Volver al panel</a>
+    </div>
+    <p class="agenda-vivo" id="agenda-vivo" role="status" aria-live="polite"></p>
+    <!-- COPY PROPUESTO -->
+    <p class="agenda-nota">Enlace de agendamiento pendiente. Hyperion declara en su brief que la landing del Diagnóstico tiene tres piezas sin cerrar: el enlace de reserva, el identificador del formulario de contacto y el reparto de tráfico de la prueba A/B. Esta propuesta no publica correo ni teléfono: no se inventan datos de contacto.</p>
+  </div>
+  <span class="arco" aria-hidden="true"></span>
+</section>
+</main>
+
+<footer>
+  <div class="wrap f-grid">
+    <a class="lockup" href="#top">
+      <span class="lk-name">Hyperion</span>
+      <span class="lk-sub">Advisory</span>
+      <span class="lk-arc" aria-hidden="true"></span>
+    </a>
+    <div class="f-txt">
+      <p>Fuentes de todas las cifras de esta página: Lovallo &amp; Sibony (McKinsey Quarterly) · Kahneman, Sibony &amp; Sunstein · Flyvbjerg · Malmendier &amp; Tate (NBER).</p>
+      <!-- COPY PROPUESTO -->
+      <p>Hyperion Advisory · Gobernanza y calidad de decisión de directorio · Santiago de Chile · Latinoamérica y España.</p>
+      <!-- COPY PROPUESTO -->
+      <p>Propuesta de agencia, documento de trabajo. El panel de diez preguntas es una demostración: no es el instrumento de 45 ítems ni calcula el Índice de Vulnerabilidad Decisional. El lockup tipográfico es provisional, a la espera del logotipo definitivo.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  var d = document;
+  d.documentElement.className += ' js';
+
+  /* ---------- video del hero ---------- */
+  var v = d.getElementById('bgv');
+  if (v) {
+    var enciende = function(){
+      if (v.readyState >= 3 && !v.paused) v.classList.add('ok');
+    };
+    ['playing','canplay','loadeddata'].forEach(function(e){ v.addEventListener(e, enciende); });
+    v.addEventListener('error', function(){ v.classList.remove('ok'); });
+    enciende();
+    setTimeout(enciende, 600);
+    setTimeout(enciende, 1800);
+  }
+
+  /* ---------- reveal ---------- */
+  var revs = [].slice.call(d.querySelectorAll('.rv'));
+  if ('IntersectionObserver' in window && revs.length) {
+    var io = new IntersectionObserver(function(entradas, obs){
+      entradas.forEach(function(en){
+        if (en.isIntersecting) { en.target.classList.add('vis'); obs.unobserve(en.target); }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    revs.forEach(function(el){ io.observe(el); });
+  } else {
+    revs.forEach(function(el){ el.classList.add('vis'); });
+  }
+
+  /* ---------- panel de diez preguntas ---------- */
+  var NOMBRES = {
+    A: 'Sesgos de acción',
+    B: 'Sesgos de estabilidad',
+    C: 'Sesgos de patrón',
+    D: 'Sesgos de interés',
+    E: 'Sesgos sociales',
+    F: 'Higiene de proceso',
+    G: 'Condiciones de decisión'
+  };
+  var ORDEN = ['A','B','C','D','E','F','G'];
+
+  var form   = d.getElementById('form');
+  var qs     = form ? [].slice.call(form.querySelectorAll('.q')) : [];
+  var bSig   = d.getElementById('btn-sig');
+  var bAtras = d.getElementById('btn-atras');
+  var bReset = d.getElementById('btn-reset');
+  var pasoN  = d.getElementById('paso-n');
+  var progI  = d.getElementById('prog-i');
+  var avisoV = d.getElementById('aviso-vivo');
+  var res    = d.getElementById('res');
+  var resN   = d.getElementById('res-n');
+  var resVivo= d.getElementById('res-vivo');
+  var bloques= d.getElementById('bloques');
+  var focoTx = d.getElementById('res-foco-txt');
+  var idx = 0;
+
+  function total(){ return qs.length; }
+
+  function pintaPaso(i, mueveFoco){
+    qs.forEach(function(q, k){
+      if (k === i) q.classList.add('on'); else q.classList.remove('on');
+    });
+    if (pasoN) pasoN.textContent = String(i + 1);
+    if (progI) progI.style.width = Math.round(((i + 1) / total()) * 100) + '%';
+    if (bAtras) bAtras.style.display = i === 0 ? 'none' : '';
+    if (bSig) bSig.textContent = (i === total() - 1) ? 'Ver resultado indicativo' : 'Siguiente';
+    if (avisoV) avisoV.textContent = '';
+    if (mueveFoco) {
+      var lg = qs[i].querySelector('legend');
+      if (lg) lg.focus();
+    }
+  }
+
+  function valorDe(q){
+    var m = q.querySelector('input:checked');
+    return m ? Number(m.value) : null;
+  }
+
+  function calcula(){
+    var suma = 0;
+    var porBloque = {};
+    qs.forEach(function(q){
+      var b = q.getAttribute('data-bloque');
+      var val = valorDe(q);
+      suma += val;
+      if (!porBloque[b]) porBloque[b] = [];
+      porBloque[b].push(val);
+    });
+    var prom = Math.round(suma / total());
+    var filas = '';
+    var alto = -1, altoB = '';
+    ORDEN.forEach(function(b){
+      var arr = porBloque[b] || [];
+      if (!arr.length) return;
+      var pb = Math.round(arr.reduce(function(a, n){ return a + n; }, 0) / arr.length);
+      if (pb > alto) { alto = pb; altoB = b; }
+      filas += '<div class="bl-row">'
+            +  '<span class="bl-nom">' + b + ' · ' + NOMBRES[b] + '</span>'
+            +  '<span class="bl-val">' + pb + '</span>'
+            +  '<span class="bl-track"><i class="bl-fill" style="width:' + pb + '%"></i></span>'
+            +  '</div>';
+    });
+    if (resN) resN.textContent = String(prom);
+    if (bloques) bloques.innerHTML = filas;
+
+    var frase;
+    if (alto <= 0) {
+      frase = 'Marcó «Nunca» en las diez. Es una respuesta poco frecuente. Contrástela con la de los demás directores antes de darla por buena.';
+    } else {
+      frase = 'Su respuesta más alta está en el bloque ' + altoB + ' · ' + NOMBRES[altoB] + '. En el instrumento completo ese bloque pesa ' + pesoDe(altoB) + ' del IVD.';
+    }
+    if (focoTx) focoTx.textContent = frase;
+    if (resVivo) resVivo.textContent = 'Resultado indicativo: ' + prom + ' de 100, promedio simple de sus diez respuestas. ' + frase;
+
+    if (res) res.classList.add('on');
+    var foco = d.getElementById('res-foco');
+    if (foco) {
+      foco.focus();
+      if (foco.scrollIntoView) foco.scrollIntoView({ block: 'start' });
+    }
+  }
+
+  function pesoDe(b){
+    var p = { A:'15%', B:'15%', C:'13%', D:'12%', E:'15%', F:'20%', G:'10%' };
+    return p[b] || '';
+  }
+
+  if (qs.length) {
+    pintaPaso(0, false);
+
+    if (bSig) bSig.addEventListener('click', function(){
+      if (valorDe(qs[idx]) === null) {
+        if (avisoV) avisoV.textContent = 'Elija una de las cinco opciones para continuar.';
+        var pr = qs[idx].querySelector('input');
+        if (pr) pr.focus();
+        return;
+      }
+      if (idx < total() - 1) { idx += 1; pintaPaso(idx, true); }
+      else { calcula(); }
+    });
+
+    if (bAtras) bAtras.addEventListener('click', function(){
+      if (idx > 0) { idx -= 1; pintaPaso(idx, true); }
+    });
+
+    form.addEventListener('change', function(){
+      if (avisoV) avisoV.textContent = '';
+    });
+
+    form.addEventListener('submit', function(e){ e.preventDefault(); });
+
+    if (bReset) bReset.addEventListener('click', function(){
+      form.reset();
+      idx = 0;
+      if (res) res.classList.remove('on');
+      if (resVivo) resVivo.textContent = '';
+      pintaPaso(0, true);
+      var p = d.getElementById('panel');
+      if (p && p.scrollIntoView) p.scrollIntoView({ block: 'start' });
+    });
+  }
+
+  /* ---------- agendamiento pendiente ---------- */
+  var bAg = d.getElementById('btn-agenda');
+  var agV = d.getElementById('agenda-vivo');
+  if (bAg && agV) {
+    bAg.addEventListener('click', function(){
+      agV.textContent = 'Enlace de agendamiento pendiente de configuración. En esta propuesta el botón queda conectado al calendario que Hyperion defina.';
+    });
+  }
+})();
+</script>
+</body>
+</html>

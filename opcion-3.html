@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hyperion Advisory — ¿Cuántas respuestas distintas recibe?</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#071527">
+<!-- COPY PROPUESTO -->
+<meta name="description" content="Los números se auditan. Las decisiones, casi nunca. Hyperion Advisory audita y rediseña el proceso decisional de un directorio.">
+<link rel="icon" type="image/png" sizes="512x512" href="img/marca/favicon-512.png">
+<link rel="apple-touch-icon" href="img/marca/favicon-180.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hyperion Advisory — Los números se auditan. Las decisiones, casi nunca.">
+<meta property="og:description" content="Auditamos y rediseñamos el proceso por el cual un directorio convierte información en compromiso de capital.">
+<meta property="og:image" content="https://sebafigueroads.github.io/hyperion/img/og.jpg">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ─────────── sistema ─────────── */
+:root{
+  --navy:#0B1E3C;
+  --deep:#071527;
+  --card:#16305A;
+  --gold:#C9A860;
+  --gold-l:#E7CC89;
+  --ivory:#F5F1E8;
+  --ice:#8FB8E8;
+  --serif:"Playfair Display","Didot","Bodoni 72","Hoefler Text",Garamond,"Times New Roman",serif;
+  --sans:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --pad:clamp(1.2rem,5vw,2.5rem);
+  --ease:cubic-bezier(.22,.61,.36,1);
+  --micro:clamp(.66rem,1.9vw,.74rem);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{overflow-x:clip;-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{
+  margin:0;overflow-x:clip;max-width:100%;
+  background:var(--deep);color:var(--ivory);
+  font-family:var(--sans);font-weight:300;
+  font-size:clamp(1rem,2.5vw,1.1rem);line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+img,svg,video{display:block;max-width:100%}
+h1,h2,h3,p,ol,li{margin:0;padding:0}
+ol{list-style:none}
+a{color:inherit}
+.wrap{width:min(100% - (var(--pad) * 2),1140px);margin-inline:auto}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
+.skip{position:absolute;left:var(--pad);top:-100px;z-index:60;background:var(--gold);color:var(--deep);
+  padding:.7rem 1.1rem;font-size:.85rem;letter-spacing:.04em;transition:top .18s ease}
+.skip:focus{top:1rem}
+:focus-visible{outline:2px solid var(--gold-l);outline-offset:4px}
+
+/* ─────────── revelado ─────────── */
+[data-rev]{opacity:0;transform:translate3d(0,20px,0);
+  transition:opacity 1.15s var(--ease),transform 1.15s var(--ease);will-change:opacity,transform}
+[data-rev].vis{opacity:1;transform:none}
+[data-kb]{transform:scale(1.07);transition:transform 3s var(--ease);will-change:transform}
+[data-kb].vis{transform:scale(1)}
+.rule[data-rev]{transform:scaleX(0);transform-origin:0 50%;
+  transition:opacity .5s ease,transform 1.3s var(--ease)}
+.rule[data-rev].vis{transform:scaleX(1)}
+
+/* ─────────── motivo: arco dorado ─────────── */
+.arco{color:var(--gold);opacity:.55;pointer-events:none}
+.arco svg{width:100%;height:100%}
+.arco path{fill:none;stroke:currentColor;stroke-width:1.25;vector-effect:non-scaling-stroke}
+
+/* ─────────── lockup tipográfico ─────────── */
+.lockup{display:inline-flex;flex-direction:column;align-items:flex-start;line-height:1}
+.lockup__n{font-family:var(--serif);font-weight:400;
+  font-size:clamp(1.24rem,3.6vw,1.62rem);letter-spacing:.015em;color:var(--ivory)}
+.lockup__arc{display:block;width:100%;height:.55em;margin:.28em 0 .3em;color:var(--gold);opacity:.9}
+.lockup__arc svg{width:100%;height:100%}
+.lockup__arc path{fill:none;stroke:currentColor;stroke-width:1.1;vector-effect:non-scaling-stroke}
+.lockup__s{font-family:var(--sans);font-weight:400;text-transform:uppercase;
+  font-size:clamp(.56rem,1.7vw,.68rem);letter-spacing:.44em;
+  color:rgba(245,241,232,.72);padding-left:.05em}
+
+/* ─────────── A · apertura ─────────── */
+.hero{position:relative;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;
+  isolation:isolate;overflow:hidden;background:var(--deep)}
+.hero__media{position:absolute;inset:0;z-index:0}
+.bgimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.bgv{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;
+  opacity:0;transition:opacity 1.6s ease;pointer-events:none}
+.bgv.ok{opacity:1}
+.scrim{position:absolute;inset:0;z-index:2;pointer-events:none}
+.scrim--hero{
+  background:
+    radial-gradient(125% 92% at 50% 34%,rgba(7,21,39,0) 26%,rgba(7,21,39,.58) 100%),
+    linear-gradient(180deg,
+      rgba(7,21,39,.74) 0%,
+      rgba(7,21,39,.30) 22%,
+      rgba(7,21,39,.34) 44%,
+      rgba(7,21,39,.70) 64%,
+      rgba(7,21,39,.88) 78%,
+      rgba(7,21,39,.97) 100%);
+}
+.hero__top{position:relative;z-index:3;padding:calc(var(--pad) + .4rem) var(--pad) 0}
+.hero__body{position:relative;z-index:3;flex:1;display:flex;flex-direction:column;
+  justify-content:flex-end;padding-bottom:clamp(5.5rem,13vh,8.5rem)}
+.hero__q{
+  font-family:var(--serif);font-weight:400;
+  font-size:clamp(2.05rem,8.4vw,6rem);line-height:1.03;letter-spacing:-.015em;
+  color:var(--ivory);text-wrap:balance;max-width:16ch;
+  text-shadow:0 2px 30px rgba(7,21,39,.8),0 1px 3px rgba(7,21,39,.6);
+  transition-duration:1.5s;
+}
+.hero__q .em{font-style:italic}
+.hero__foot{position:relative;z-index:3;padding:0 var(--pad) clamp(1.6rem,4vh,2.4rem);
+  display:flex;justify-content:center}
+.cue{display:inline-flex;flex-direction:column;align-items:center;gap:.72rem;
+  min-height:44px;padding:.55rem 1.4rem;text-decoration:none;
+  color:rgba(245,241,232,.78);font-size:var(--micro);letter-spacing:.26em;
+  text-transform:uppercase;transition:opacity .6s ease,color .3s ease}
+.cue:hover{color:var(--gold-l)}
+.cue__track{position:relative;display:block;width:1px;height:46px;background:rgba(201,168,96,.42)}
+.cue__dot{position:absolute;left:-1px;top:0;width:3px;height:3px;border-radius:50%;
+  background:var(--gold-l);animation:fall 2.6s var(--ease) infinite}
+@keyframes fall{0%{transform:translateY(0);opacity:0}18%{opacity:1}82%{opacity:1}100%{transform:translateY(43px);opacity:0}}
+.hero.moved .cue{opacity:0;pointer-events:none}
+.arco--hero{position:absolute;left:0;right:0;bottom:0;z-index:3;
+  height:clamp(64px,11vh,124px);opacity:.42}
+
+/* ─────────── B · la tesis ─────────── */
+.tesis{background:var(--deep);min-height:100vh;min-height:100svh;
+  display:flex;align-items:center;padding:clamp(5rem,16vh,9rem) 0}
+.tesis__msg{font-family:var(--serif);font-weight:400;
+  font-size:clamp(1.95rem,7.2vw,4.9rem);line-height:1.14;letter-spacing:-.012em;
+  max-width:19ch}
+.tesis__l{display:block;transition-duration:1.7s}
+.tesis__l--a{color:rgba(245,241,232,.55)}
+.tesis__l--b{color:var(--ivory)}
+.tesis__rule{display:block;height:1px;width:min(100%,17rem);margin-top:clamp(2rem,5vh,3.2rem);
+  background:linear-gradient(90deg,var(--gold),rgba(201,168,96,0))}
+
+/* ─────────── C · el recorrido ─────────── */
+.paso{position:relative;min-height:100vh;min-height:100svh;display:flex;
+  align-items:flex-end;overflow:hidden;isolation:isolate;background:var(--deep)}
+.paso__media{position:absolute;inset:0;z-index:0}
+.paso__media img{width:100%;height:100%;object-fit:cover}
+.scrim--paso{
+  background:
+    linear-gradient(180deg,rgba(7,21,39,.46) 0%,rgba(7,21,39,.22) 30%,
+      rgba(7,21,39,.62) 62%,rgba(7,21,39,.86) 84%,rgba(7,21,39,.95) 100%),
+    linear-gradient(90deg,rgba(7,21,39,.55) 0%,rgba(7,21,39,.12) 62%,rgba(7,21,39,0) 100%);
+}
+.paso__body{position:relative;z-index:3;padding-block:clamp(3.4rem,9vh,6rem)}
+.idx{font-family:var(--serif);font-size:clamp(.9rem,2.6vw,1.05rem);color:var(--gold-l);
+  letter-spacing:.2em;margin-bottom:clamp(.9rem,2.4vh,1.4rem)}
+.idea{font-family:var(--serif);font-weight:400;
+  font-size:clamp(1.72rem,6.2vw,3.5rem);line-height:1.1;letter-spacing:-.012em;
+  color:var(--ivory);text-wrap:balance;max-width:20ch;
+  text-shadow:0 2px 26px rgba(7,21,39,.75)}
+.idea__s{margin-top:clamp(.9rem,2.6vh,1.4rem);color:rgba(245,241,232,.78);
+  max-width:38ch;text-shadow:0 1px 18px rgba(7,21,39,.8)}
+
+/* ─────────── D · las cifras ─────────── */
+.cifra{min-height:100vh;min-height:100svh;display:flex;align-items:center;
+  padding:clamp(5rem,14vh,8rem) 0;position:relative;overflow:hidden}
+.cifra--a{background:var(--deep)}
+.cifra--b{background:var(--navy)}
+.cifra__n{font-family:var(--serif);font-weight:400;color:var(--gold);
+  font-size:clamp(5rem,24vw,12.5rem);line-height:.86;letter-spacing:-.03em;
+  display:flex;align-items:baseline;gap:.06em}
+.cifra__u{font-size:.42em;letter-spacing:-.01em;color:var(--gold-l)}
+.rule{display:block;height:1px;width:min(100%,20rem);
+  margin:clamp(1.6rem,4.4vh,2.6rem) 0 clamp(1.3rem,3.4vh,1.9rem);
+  background:linear-gradient(90deg,var(--gold) 0%,rgba(201,168,96,.05) 100%)}
+.cifra__t{font-size:clamp(1.02rem,3.4vw,1.42rem);line-height:1.5;
+  color:rgba(245,241,232,.9);max-width:30ch;font-weight:300}
+.fuente{margin-top:clamp(1.5rem,4vh,2.2rem);font-size:var(--micro);max-width:46ch;
+  letter-spacing:.1em;color:rgba(245,241,232,.58);line-height:1.5}
+
+/* ─────────── E · las tres líneas ─────────── */
+.lineas{background:var(--navy);padding:clamp(5rem,14vh,8.5rem) 0;
+  min-height:100vh;min-height:100svh;display:flex;align-items:center}
+.kicker{font-size:var(--micro);letter-spacing:.28em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:clamp(1.1rem,3vh,1.6rem)}
+.lineas__h{font-family:var(--serif);font-weight:400;
+  font-size:clamp(1.42rem,4.6vw,2.5rem);line-height:1.22;letter-spacing:-.01em;
+  color:var(--ivory);max-width:24ch;text-wrap:balance}
+.ln{margin-top:clamp(2.6rem,7vh,4.4rem);border-top:1px solid rgba(201,168,96,.26)}
+.ln li{border-bottom:1px solid rgba(201,168,96,.26);
+  padding:clamp(1.5rem,4vh,2.4rem) 0;
+  display:grid;grid-template-columns:auto 1fr;column-gap:clamp(1rem,4vw,2.6rem);row-gap:.5rem}
+.ln__i{font-family:var(--serif);font-size:clamp(.86rem,2.5vw,1rem);color:var(--gold-l);
+  letter-spacing:.16em;padding-top:.3em}
+.ln__h{font-family:var(--serif);font-weight:400;
+  font-size:clamp(1.16rem,3.9vw,1.85rem);line-height:1.24;color:var(--ivory)}
+.ln__p{grid-column:2;color:rgba(245,241,232,.72);max-width:52ch;
+  font-size:clamp(.94rem,2.4vw,1.04rem);line-height:1.58}
+
+/* ─────────── F · el cierre ─────────── */
+.cierre{background:var(--deep);position:relative;overflow:hidden;
+  min-height:100vh;min-height:100svh;display:flex;align-items:center;
+  padding:clamp(5.5rem,15vh,9rem) 0 clamp(8rem,18vh,11rem);text-align:center}
+.cierre .wrap{display:flex;flex-direction:column;align-items:center}
+.cierre__q{font-family:var(--serif);font-weight:400;
+  font-size:clamp(1.95rem,7.6vw,5.2rem);line-height:1.05;letter-spacing:-.015em;
+  color:var(--ivory);max-width:15ch;text-wrap:balance;
+  margin-top:clamp(1.4rem,4vh,2.2rem);transition-duration:1.4s}
+.cta{appearance:none;-webkit-appearance:none;border:0;cursor:pointer;
+  margin-top:clamp(2.6rem,7vh,3.8rem);
+  min-height:52px;padding:1rem 2.1rem;
+  background:var(--gold);color:var(--deep);
+  font-family:var(--sans);font-weight:500;font-size:clamp(.92rem,2.6vw,1.02rem);
+  letter-spacing:.06em;border-radius:2px;
+  transition:transform .3s var(--ease),background-color .3s ease}
+.cta:hover{background:var(--gold-l);transform:translateY(-2px)}
+.cta:active{transform:translateY(0)}
+.nota{margin-top:clamp(1.2rem,3.4vh,1.8rem);font-size:var(--micro);letter-spacing:.06em;
+  color:rgba(245,241,232,.58);max-width:42ch;line-height:1.6}
+.arco--cierre{position:absolute;left:0;right:0;bottom:0;z-index:1;
+  height:clamp(70px,12vh,140px);opacity:.4}
+
+/* ─────────── pie ─────────── */
+.pie{background:var(--deep);border-top:1px solid rgba(201,168,96,.22);
+  padding:clamp(2.6rem,7vh,4rem) 0 clamp(2.2rem,6vh,3.2rem)}
+.pie__g{display:flex;flex-wrap:wrap;gap:clamp(1.6rem,5vw,3rem);align-items:flex-start;
+  justify-content:space-between}
+.pie__t{font-size:var(--micro);letter-spacing:.06em;line-height:1.75;
+  color:rgba(245,241,232,.58);max-width:56ch}
+.pie__t b{font-weight:500;color:rgba(245,241,232,.82);letter-spacing:.1em;
+  text-transform:uppercase;display:block;margin-bottom:.45rem;font-size:.94em}
+
+@media (min-width:820px){
+  .hero__q{max-width:14ch}
+  .paso__body{padding-inline-start:0}
+  .ln li{grid-template-columns:auto minmax(0,34ch) minmax(0,1fr);align-items:start}
+  .ln__p{grid-column:3;padding-top:.35em}
+  .scrim--paso{background:
+    linear-gradient(180deg,rgba(7,21,39,.42) 0%,rgba(7,21,39,.18) 34%,
+      rgba(7,21,39,.58) 64%,rgba(7,21,39,.86) 86%,rgba(7,21,39,.95) 100%),
+    linear-gradient(90deg,rgba(7,21,39,.72) 0%,rgba(7,21,39,.22) 52%,rgba(7,21,39,0) 82%)}
+}
+
+/* ─────────── movimiento reducido ─────────── */
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{
+    animation-duration:.001ms !important;animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;transition-delay:0ms !important}
+  .bgv{display:none}
+  [data-rev],[data-kb]{opacity:1 !important;transform:none !important}
+  .cue__dot{animation:none;top:20px}
+  .hero.moved .cue{opacity:1}
+}
+</style>
+<noscript><style>
+[data-rev],[data-kb]{opacity:1 !important;transform:none !important}
+.bgv{display:none}
+</style></noscript>
+</head>
+<body>
+<a class="skip" href="#tesis">Ir al contenido</a>
+
+<!-- ══════════ A · APERTURA ══════════ -->
+<section class="hero" id="apertura">
+  <div class="hero__media">
+    <img class="bgimg" src="img/gal/sala.jpg" width="1376" height="768"
+         alt="Sala de directorio vacía a la hora azul, con la ciudad al fondo.">
+    <video class="bgv" id="bgv" autoplay muted loop playsinline preload="metadata" aria-hidden="true" tabindex="-1">
+      <source src="img/vid/sala.mp4" type="video/mp4">
+    </video>
+    <div class="scrim scrim--hero"></div>
+  </div>
+
+  <div class="hero__top">
+    <div class="lockup">
+      <span class="lockup__n">Hyperion</span>
+      <span class="lockup__arc" aria-hidden="true">
+        <svg viewBox="0 0 120 14" preserveAspectRatio="none" focusable="false"><path d="M0 13 C 26 1 94 1 120 13"/></svg>
+      </span>
+      <span class="lockup__s">Advisory</span>
+    </div>
+  </div>
+
+  <div class="hero__body wrap">
+    <h1 class="hero__q" data-rev="240">¿Cuántas respuestas distintas recibe?</h1>
+  </div>
+
+  <div class="hero__foot">
+    <a class="cue" href="#tesis">
+      <span class="cue__track" aria-hidden="true"><span class="cue__dot"></span></span>
+      <!-- COPY PROPUESTO -->
+      <span>Continúe<span class="sr"> a la tesis</span></span>
+    </a>
+  </div>
+
+  <div class="arco arco--hero" aria-hidden="true">
+    <svg viewBox="0 0 1200 120" preserveAspectRatio="none" focusable="false"><path d="M0 118 C 268 6 932 6 1200 118"/></svg>
+  </div>
+</section>
+
+<!-- ══════════ B · LA TESIS ══════════ -->
+<section class="tesis" id="tesis">
+  <div class="wrap">
+    <h2 class="tesis__msg">
+      <span class="tesis__l tesis__l--a" data-rev="0">Los números se auditan.</span>
+      <span class="tesis__l tesis__l--b" data-rev="1400">Las decisiones, casi nunca.</span>
+    </h2>
+    <span class="tesis__rule rule" data-rev="2600" aria-hidden="true"></span>
+  </div>
+</section>
+
+<!-- ══════════ C · EL RECORRIDO ══════════ -->
+<section class="paso" id="paso-1" aria-labelledby="idea-1">
+  <div class="paso__media">
+    <img src="img/gal/silla.jpg" width="1376" height="768" loading="lazy" data-kb
+         alt="Una silla vacía en la cabecera de la mesa, bajo una luz dorada rasante.">
+    <div class="scrim scrim--paso"></div>
+  </div>
+  <div class="paso__body wrap">
+    <p class="idx" data-rev="0">01</p>
+    <h2 class="idea" id="idea-1" data-rev="180">El proceso es el activo</h2>
+    <p class="idea__s" data-rev="420">La calidad del proceso decisional predice el resultado mejor que la calidad del análisis. Es una variable de gestión, no un rasgo de personalidad.</p>
+  </div>
+</section>
+
+<section class="paso" id="paso-2" aria-labelledby="idea-2">
+  <div class="paso__media">
+    <img src="img/gal/mesa.jpg" width="1376" height="768" loading="lazy" data-kb
+         alt="Primer plano de la mesa de directorio con una carpeta cerrada en cada asiento.">
+    <div class="scrim scrim--paso"></div>
+  </div>
+  <div class="paso__body wrap">
+    <p class="idx" data-rev="0">02</p>
+    <h2 class="idea" id="idea-2" data-rev="180">El desacuerdo es medible</h2>
+    <p class="idea__s" data-rev="420">El ruido entre directores existe, es cuantificable y cuesta dinero. Medirlo es el primer acto de gobierno corporativo real.</p>
+  </div>
+</section>
+
+<section class="paso" id="paso-3" aria-labelledby="idea-3">
+  <div class="paso__media">
+    <img src="img/gal/sala.jpg" width="1376" height="768" loading="lazy" data-kb
+         alt="La sala de directorio vacía, vista completa, con la ciudad encendida al fondo.">
+    <div class="scrim scrim--paso"></div>
+  </div>
+  <div class="paso__body wrap">
+    <p class="idx" data-rev="0">03</p>
+    <h2 class="idea" id="idea-3" data-rev="180">El correctivo es barato</h2>
+    <p class="idea__s" data-rev="420">Pre-mortem, contradictor formal, voto confidencial previo, bitácora. Prácticas de bajo costo y efecto documentado.</p>
+  </div>
+</section>
+
+<!-- ══════════ D · LAS CIFRAS ══════════ -->
+<section class="cifra cifra--a" id="cifra-1" aria-labelledby="c1">
+  <div class="wrap cifra__in">
+    <p class="cifra__n" data-rev="0"><span>39</span><span class="cifra__u">%</span></p>
+    <span class="rule" data-rev="420" aria-hidden="true"></span>
+    <h2 class="cifra__t" id="c1" data-rev="600">de la varianza del resultado se explica por la calidad del proceso. El análisis explica 8%.</h2>
+    <p class="fuente" data-rev="820">Fuente: Lovallo &amp; Sibony, McKinsey&nbsp;Quarterly.</p>
+  </div>
+</section>
+
+<section class="cifra cifra--b" id="cifra-2" aria-labelledby="c2">
+  <div class="wrap cifra__in">
+    <p class="cifra__n" data-rev="0"><span>+6,9</span><span class="cifra__u">pp</span></p>
+    <span class="rule" data-rev="420" aria-hidden="true"></span>
+    <h2 class="cifra__t" id="c2" data-rev="600">de ROI adicional en el cuartil superior de calidad de proceso decisional.</h2>
+    <p class="fuente" data-rev="820">Fuente: Lovallo &amp; Sibony, McKinsey&nbsp;Quarterly.</p>
+  </div>
+</section>
+
+<section class="cifra cifra--a" id="cifra-3" aria-labelledby="c3">
+  <div class="wrap cifra__in">
+    <p class="cifra__n" data-rev="0"><span>55</span><span class="cifra__u">%</span></p>
+    <span class="rule" data-rev="420" aria-hidden="true"></span>
+    <h2 class="cifra__t" id="c3" data-rev="600">de diferencia mediana entre profesionales evaluando exactamente el mismo caso. Esperaban 10%.</h2>
+    <p class="fuente" data-rev="820">Fuente: Kahneman, Sibony &amp; Sunstein.</p>
+  </div>
+</section>
+
+<section class="cifra cifra--b" id="cifra-4" aria-labelledby="c4">
+  <div class="wrap cifra__in">
+    <p class="cifra__n" data-rev="0"><span>28</span><span class="cifra__u">%</span></p>
+    <span class="rule" data-rev="420" aria-hidden="true"></span>
+    <h2 class="cifra__t" id="c4" data-rev="600">de 2.207 ejecutivos calificó como buena la calidad de sus decisiones estratégicas.</h2>
+    <p class="fuente" data-rev="820">Fuente: Lovallo &amp; Sibony, McKinsey&nbsp;Quarterly.</p>
+  </div>
+</section>
+
+<!-- ══════════ E · LAS TRES LÍNEAS ══════════ -->
+<section class="lineas" id="lineas" aria-labelledby="lh">
+  <div class="wrap">
+    <!-- COPY PROPUESTO -->
+    <p class="kicker" data-rev="0">Tres líneas de servicio</p>
+    <h2 class="lineas__h" id="lh" data-rev="150">El diagnóstico abre. La arquitectura instala. El acompañamiento sostiene.</h2>
+    <ol class="ln">
+      <li data-rev="320">
+        <span class="ln__i" aria-hidden="true">01</span>
+        <h3 class="ln__h">Diagnóstico de Sesgos de Directorio</h3>
+        <p class="ln__p">Instrumento de 45 ítems que cada director responde por separado. Entrega el Índice de Vulnerabilidad Decisional, el Índice de Ruido entre directores y un plan 30/60/90.</p>
+      </li>
+      <li data-rev="460">
+        <span class="ln__i" aria-hidden="true">02</span>
+        <h3 class="ln__h">Arquitectura de decisión</h3>
+        <p class="ln__p">Rediseño del ciclo de asignación de capital: clase de referencia, contradictor formal, voto confidencial previo, criterios explícitos, bitácora de decisiones.</p>
+      </li>
+      <li data-rev="600">
+        <span class="ln__i" aria-hidden="true">03</span>
+        <h3 class="ln__h">CFO fraccional y acompañamiento</h3>
+        <p class="ln__p">Presencia fraccional en comité y directorio: disciplina financiera más higiene de decisión.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ══════════ F · EL CIERRE ══════════ -->
+<section class="cierre" id="cierre" aria-labelledby="cq">
+  <div class="wrap">
+    <div class="lockup" style="align-items:center" data-rev="0">
+      <span class="lockup__n">Hyperion</span>
+      <span class="lockup__arc" aria-hidden="true">
+        <svg viewBox="0 0 120 14" preserveAspectRatio="none" focusable="false"><path d="M0 13 C 26 1 94 1 120 13"/></svg>
+      </span>
+      <span class="lockup__s">Advisory</span>
+    </div>
+    <h2 class="cierre__q" id="cq" data-rev="260">¿Cuántas respuestas distintas recibe?</h2>
+    <!-- COPY PROPUESTO -->
+    <button class="cta" type="button" aria-describedby="nota-cta" data-rev="640">Solicitar una conversación</button>
+    <!-- COPY PROPUESTO -->
+    <p class="nota" id="nota-cta" data-rev="760">Maqueta de propuesta. El botón no tiene destino: el brief no declara correo, teléfono ni enlace de agendamiento públicos.</p>
+  </div>
+  <div class="arco arco--cierre" aria-hidden="true">
+    <svg viewBox="0 0 1200 120" preserveAspectRatio="none" focusable="false"><path d="M0 118 C 268 6 932 6 1200 118"/></svg>
+  </div>
+</section>
+
+<footer class="pie">
+  <div class="wrap pie__g">
+    <p class="pie__t"><b>Base de evidencia</b>
+      Lovallo &amp; Sibony (McKinsey Quarterly) · Kahneman, Sibony &amp; Sunstein · Flyvbjerg · Malmendier &amp; Tate (NBER).</p>
+    <!-- COPY PROPUESTO -->
+    <p class="pie__t"><b>Nota</b>
+      Hyperion Advisory · Gobernanza y calidad de decisión · Santiago de Chile. Léxico de esta versión: Directorio y Director (Chile, Perú, Argentina, Uruguay). Documento de trabajo, no publicado.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  var d = document;
+  var mq = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+  var reduce = !!(mq && mq.matches);
+  var hasIO = 'IntersectionObserver' in window;
+
+  /* ── 1 · revelado por scroll ── */
+  var items = [].slice.call(d.querySelectorAll('[data-rev],[data-kb]'));
+  function show(el){ el.classList.add('vis'); }
+
+  if (reduce || !hasIO) {
+    items.forEach(show);
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (!en.isIntersecting) return;
+        var el = en.target;
+        io.unobserve(el);
+        var ms = parseInt(el.getAttribute('data-rev'), 10);
+        if (!ms || ms < 0) { show(el); return; }
+        window.setTimeout(function(){ show(el); }, ms);
+      });
+    }, { threshold: 0, rootMargin: '0px 0px -16% 0px' });
+    items.forEach(function(el){ io.observe(el); });
+  }
+
+  /* ── 2 · video del hero ── */
+  var v = d.getElementById('bgv');
+  if (v && !reduce) {
+    var enciende = function(){
+      if (v.readyState >= 3 && !v.paused) v.classList.add('ok');
+    };
+    ['playing','canplay','loadeddata'].forEach(function(e){ v.addEventListener(e, enciende); });
+    v.addEventListener('error', function(){ v.classList.remove('ok'); });
+
+    var arranca = function(){
+      var p = v.play();
+      if (p && typeof p.catch === 'function') p.catch(function(){});
+    };
+    arranca();
+    enciende();
+    window.setTimeout(enciende, 600);
+    window.setTimeout(enciende, 1800);
+
+    /* pausa al salir de pantalla — este observer NO hace unobserve */
+    if (hasIO) {
+      var vio = new IntersectionObserver(function(entries){
+        entries.forEach(function(en){
+          if (en.isIntersecting) { arranca(); } else { v.pause(); }
+        });
+      }, { threshold: 0.05 });
+      vio.observe(v);
+    }
+    d.addEventListener('visibilitychange', function(){
+      if (d.hidden) { v.pause(); } else if (v.getBoundingClientRect().bottom > 0) { arranca(); }
+    });
+  }
+
+  /* ── 3 · la señal de bajar se retira al primer scroll ── */
+  var hero = d.getElementById('apertura');
+  if (hero) {
+    var marca = function(){
+      if (window.pageYOffset > 40) {
+        hero.classList.add('moved');
+        window.removeEventListener('scroll', marca);
+      }
+    };
+    window.addEventListener('scroll', marca, { passive: true });
+    marca();
+  }
+})();
+</script>
+</body>
+</html>

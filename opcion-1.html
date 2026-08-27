@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hyperion Advisory — Los números se auditan. Las decisiones, casi nunca.</title>
+<meta name="description" content="Hyperion Advisory audita y rediseña el proceso decisional de un directorio. Diagnóstico de Sesgos de Directorio, arquitectura de decisión y CFO fraccional. Santiago de Chile, Latinoamérica y España.">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0B1E3C">
+<link rel="icon" type="image/png" sizes="512x512" href="img/marca/favicon-512.png">
+<link rel="apple-touch-icon" href="img/marca/favicon-180.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hyperion Advisory — Los números se auditan. Las decisiones, casi nunca.">
+<meta property="og:description" content="Auditamos y rediseñamos el proceso por el cual un directorio convierte información en compromiso de capital.">
+<meta property="og:image" content="https://sebafigueroads.github.io/hyperion/img/og.jpg">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:locale" content="es_CL">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ==========================================================
+   HYPERION ADVISORY · OPCIÓN 1 «LA TESIS»
+   Autoridad de categoría. Navy dominante, dorado de acento,
+   Playfair en titulares y cifras, Inter en cuerpo.
+   ========================================================== */
+:root{
+  --navy:#0B1E3C;
+  --navy-deep:#071527;
+  --card:#16305A;
+  --gold:#C9A860;
+  --gold-lt:#E7CC89;
+  --gold-ink:#6F5A2C;      /* dorado oscurecido SOLO para texto pequeño sobre marfil (AA) */
+  --gold-line:#A78C55;
+  --ivory:#F5F1E8;
+  --ice:#8FB8E8;
+  --soft:#C8D4E4;
+  --mut:#9BB0CB;
+  --hair:rgba(201,168,96,.26);
+  --hair-2:rgba(143,184,232,.16);
+  --ctrl:rgba(143,184,232,.6);      /* borde de campo: 3,5:1 sobre el relleno */
+  --ctrl-gold:rgba(201,168,96,.62); /* borde de botón fantasma: 3,4:1 sobre navy */
+  --serif:'Playfair Display',Georgia,'Times New Roman',serif;
+  --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+  --ease:cubic-bezier(.22,.75,.25,1);
+  --pad:clamp(64px,9vw,124px);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+html,body{overflow-x:hidden;max-width:100%}
+body{
+  background:var(--navy);
+  color:var(--soft);
+  font-family:var(--sans);
+  font-size:16px;
+  font-weight:300;
+  line-height:1.66;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+img{max-width:100%;display:block;height:auto}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--gold);color:var(--navy-deep)}
+:focus-visible{outline:2px solid var(--gold-lt);outline-offset:3px;border-radius:2px}
+
+.wrap{width:100%;max-width:1160px;margin:0 auto;padding:0 22px}
+@media(min-width:900px){.wrap{padding:0 44px}}
+.sec{padding:var(--pad) 0;position:relative}
+.sec[id]{scroll-margin-top:78px}
+
+/* ---------- tipografía ---------- */
+.eyebrow{
+  display:flex;align-items:center;gap:12px;
+  font-size:11px;font-weight:500;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:26px;
+}
+.eyebrow::before{content:'';width:30px;height:1px;background:var(--gold);flex:0 0 auto;opacity:.8}
+.h1{
+  font-family:var(--serif);font-weight:500;color:var(--ivory);
+  font-size:clamp(1.98rem,7.4vw,4.6rem);line-height:1.07;letter-spacing:-.018em;
+}
+.h2{
+  font-family:var(--serif);font-weight:500;color:var(--ivory);
+  font-size:clamp(1.72rem,4.6vw,3rem);line-height:1.12;letter-spacing:-.012em;
+}
+.h3{
+  font-family:var(--serif);font-weight:500;color:var(--ivory);
+  font-size:clamp(1.22rem,2.6vw,1.62rem);line-height:1.22;letter-spacing:-.006em;
+}
+.lead{font-size:clamp(1rem,1.9vw,1.16rem);color:var(--soft);max-width:62ch;line-height:1.62}
+.body{color:var(--mut);max-width:66ch}
+.src{
+  font-size:11.5px;line-height:1.5;letter-spacing:.03em;color:var(--mut);
+  font-weight:400;
+}
+.src::before{content:'Fuente: ';color:var(--gold);letter-spacing:.09em;text-transform:uppercase;font-size:10px}
+.src.plain::before{content:''}
+.rule{height:1px;background:var(--hair);border:0;margin:0}
+
+/* ---------- barra de progreso dorada ---------- */
+.prog{
+  position:fixed;top:0;left:0;width:100%;height:2px;z-index:60;
+  background:linear-gradient(90deg,var(--gold),var(--gold-lt));
+  transform:scaleX(0);transform-origin:left center;pointer-events:none;
+}
+
+/* ---------- cabecera ---------- */
+.head{
+  position:fixed;top:0;left:0;width:100%;z-index:50;
+  padding:14px 0;transition:background .4s var(--ease),padding .4s var(--ease),border-color .4s var(--ease);
+  border-bottom:1px solid transparent;
+}
+.head.sticky{
+  background:rgba(7,21,39,.9);
+  -webkit-backdrop-filter:saturate(150%) blur(12px);backdrop-filter:saturate(150%) blur(12px);
+  border-bottom-color:var(--hair);padding:9px 0;
+}
+.head-in{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.nav{display:none}
+@media(min-width:1040px){
+  .nav{display:flex;align-items:center;gap:26px}
+  .nav a{
+    font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);
+    font-weight:400;padding:6px 0;position:relative;transition:color .3s var(--ease);
+  }
+  .nav a::after{
+    content:'';position:absolute;left:0;bottom:0;width:100%;height:1px;background:var(--gold);
+    transform:scaleX(0);transform-origin:left;transition:transform .35s var(--ease);
+  }
+  .nav a:hover{color:var(--ivory)}
+  .nav a:hover::after{transform:scaleX(1)}
+}
+
+/* ---------- lockup tipográfico (logotipo provisional) ---------- */
+.lockup{display:inline-flex;flex-direction:column;gap:3px;line-height:1}
+.lk-1{font-family:var(--serif);font-size:clamp(19px,3.2vw,22px);font-weight:500;color:var(--ivory);letter-spacing:.005em}
+.lk-arc{display:block;height:7px;border-bottom:1.4px solid var(--gold);border-radius:0 0 46% 46% / 0 0 100% 100%;opacity:.9}
+.lk-2{font-size:9.5px;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);font-weight:500;padding-left:.06em}
+.lockup.on-light .lk-1{color:var(--navy)}
+.lockup.on-light .lk-2{color:var(--gold-ink)}
+.lockup.on-light .lk-arc{border-bottom-color:var(--gold-line)}
+
+/* ---------- botones ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:12px;
+  min-height:52px;padding:14px 28px;
+  background:var(--gold);color:var(--navy-deep);
+  font-family:var(--sans);font-size:14px;font-weight:600;letter-spacing:.02em;
+  border:1px solid var(--gold);border-radius:2px;cursor:pointer;
+  transition:transform .35s var(--ease),background .35s var(--ease);
+  text-align:center;
+}
+.btn:hover{background:var(--gold-lt);transform:translateY(-2px)}
+.btn:active{transform:translateY(0)}
+.btn-ghost{
+  background:transparent;color:var(--ivory);border-color:var(--ctrl-gold);
+  min-height:44px;padding:11px 20px;font-weight:500;font-size:13px;
+}
+.btn-ghost:hover{background:rgba(201,168,96,.1);border-color:var(--gold)}
+.btn-arrow{width:16px;height:1px;background:currentColor;position:relative;flex:0 0 auto}
+.btn-arrow::after{content:'';position:absolute;right:0;top:-3px;width:7px;height:7px;border-top:1px solid currentColor;border-right:1px solid currentColor;transform:rotate(45deg)}
+
+/* ---------- hero ---------- */
+.hero{
+  position:relative;min-height:100svh;display:flex;align-items:flex-end;
+  overflow:hidden;background:var(--navy-deep);padding:120px 0 clamp(56px,11vw,110px);
+}
+.hero-media{position:absolute;inset:0;z-index:0}
+.hero-img{width:100%;height:100%;object-fit:cover;object-position:center 42%}
+.bgv{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;
+     opacity:0;transition:opacity 1.2s ease;pointer-events:none}
+.bgv.ok{opacity:1}
+.hero-scrim{
+  position:absolute;inset:0;z-index:2;
+  background:
+    linear-gradient(180deg,rgba(7,21,39,.86) 0%,rgba(7,21,39,.5) 32%,rgba(7,21,39,.82) 68%,rgba(7,21,39,.96) 100%),
+    linear-gradient(90deg,rgba(11,30,60,.9) 0%,rgba(11,30,60,.42) 62%,rgba(11,30,60,.6) 100%);
+}
+.arc{position:absolute;left:-4%;bottom:-1px;width:108%;height:clamp(88px,15vw,190px);z-index:3;pointer-events:none}
+.hero-in{position:relative;z-index:4;width:100%}
+.hero h1{margin-bottom:clamp(22px,3.4vw,32px)}
+.hero .lead{max-width:56ch;color:var(--soft)}
+.hero-cta{display:flex;flex-wrap:wrap;align-items:center;gap:16px 22px;margin-top:clamp(30px,4.6vw,44px)}
+.hero-note{font-size:12.5px;color:var(--mut);letter-spacing:.02em;max-width:34ch}
+.hero-foot{
+  margin-top:clamp(34px,5vw,52px);padding-top:20px;border-top:1px solid var(--hair);
+  display:flex;flex-wrap:wrap;gap:8px 26px;
+  font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--mut);
+}
+
+/* ---------- banda de categoría ---------- */
+.band{background:var(--navy);border-bottom:1px solid var(--hair-2)}
+.band-grid{display:grid;gap:clamp(30px,4.5vw,58px)}
+@media(min-width:900px){.band-grid{grid-template-columns:1.15fr .85fr;align-items:start;gap:64px}}
+.nots{list-style:none;display:grid;gap:0;border-top:1px solid var(--hair-2)}
+.nots li{
+  padding:15px 0;border-bottom:1px solid var(--hair-2);
+  display:flex;align-items:baseline;gap:14px;font-size:14.5px;color:var(--mut);
+}
+.nots li .x{color:var(--ice);font-size:11px;letter-spacing:.16em;text-transform:uppercase;flex:0 0 auto;min-width:44px}
+.nots li.is{color:var(--ivory);font-weight:400;border-bottom-color:var(--hair)}
+.nots li.is .x{color:var(--gold)}
+
+/* ---------- evidencia (pieza firma) ---------- */
+.evid{background:var(--navy-deep)}
+.chart{
+  margin-top:clamp(34px,5vw,54px);
+  padding:clamp(24px,4vw,40px);
+  background:var(--card);border:1px solid var(--hair-2);border-radius:3px;
+}
+.chart-t{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.chart-s{font-size:13px;color:var(--mut);margin-bottom:clamp(24px,3.4vw,34px)}
+.bar{
+  display:grid;grid-template-columns:minmax(0,1fr) auto;
+  grid-template-areas:"l v" "t t";
+  gap:6px 16px;align-items:baseline;
+  padding:16px 0;border-top:1px solid var(--hair-2);
+}
+.bar:first-of-type{border-top:0;padding-top:0}
+.bar-lbl{grid-area:l;font-size:14px;color:var(--soft);line-height:1.35}
+.bar-val{grid-area:v;font-family:var(--serif);font-size:clamp(1.7rem,5vw,2.35rem);line-height:1;color:var(--gold);font-weight:500}
+.bar.b2 .bar-val{color:var(--ice)}
+.bar-track{grid-area:t;position:relative;height:12px;background:rgba(143,184,232,.13);border-radius:2px;overflow:hidden;margin-top:8px}
+.bar-fill{position:absolute;top:0;left:0;width:100%;height:100%;border-radius:2px;
+  transform:scaleX(0);transform-origin:left center;
+  transition:transform 1.15s var(--ease) .12s;}
+.f-gold{background:linear-gradient(90deg,var(--gold),var(--gold-lt))}
+.f-ice{background:var(--ice);opacity:.8}
+.in .bar-fill{transform:scaleX(var(--w))}
+.chart-axis{
+  display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 12px;
+  font-size:10.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--mut);margin-top:18px;padding-top:12px;border-top:1px solid var(--hair-2);
+}
+.axis-mid{order:3;flex:1 0 100%;margin-top:4px}
+@media(min-width:620px){.axis-mid{order:0;flex:0 1 auto;margin-top:0;text-align:center}}
+@media(min-width:880px){
+  .bar{grid-template-columns:minmax(0,1fr) minmax(0,1.9fr) 92px;grid-template-areas:"l t v";align-items:center;gap:28px;padding:20px 0}
+  .bar-track{margin-top:0}
+  .bar-val{text-align:right}
+}
+
+.figs{display:grid;gap:0;margin-top:clamp(34px,5vw,56px);border-top:1px solid var(--hair)}
+@media(min-width:860px){.figs{grid-template-columns:repeat(3,1fr);gap:0}}
+.fig{padding:clamp(26px,3.6vw,36px) 0;border-bottom:1px solid var(--hair-2)}
+@media(min-width:860px){
+  .fig{padding:clamp(28px,3.4vw,38px) clamp(20px,2.4vw,32px);border-bottom:0;border-left:1px solid var(--hair-2)}
+  .fig:first-child{border-left:0;padding-left:0}
+  .fig:last-child{padding-right:0}
+}
+.fig-n{font-family:var(--serif);font-weight:500;color:var(--gold);font-size:clamp(2.9rem,8.4vw,3.9rem);line-height:.96;letter-spacing:-.02em;display:block;margin-bottom:14px}
+.fig-t{color:var(--soft);font-size:15px;line-height:1.55;margin-bottom:14px}
+.sup{margin-top:clamp(40px,5.4vw,64px)}
+.sup-t{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--mut);margin-bottom:20px}
+.sup-l{list-style:none;display:grid;gap:0;border-top:1px solid var(--hair-2)}
+@media(min-width:840px){.sup-l{grid-template-columns:1fr 1fr;column-gap:52px}}
+.sup-l li{padding:16px 0;border-bottom:1px solid var(--hair-2)}
+.sup-l b{color:var(--gold);font-family:var(--serif);font-weight:500;font-size:1.22rem;margin-right:8px;letter-spacing:.01em}
+.sup-l span{color:var(--mut);font-size:14px}
+.sup-l .src{display:block;margin-top:5px;font-size:11.5px;letter-spacing:.03em}
+.fuentes{margin-top:30px;font-size:12px;color:var(--mut);line-height:1.6;max-width:76ch}
+.fuentes strong{color:var(--soft);font-weight:500}
+
+/* ---------- pilares ---------- */
+.pil{display:grid;gap:0;margin-top:clamp(30px,4.4vw,48px);border-top:1px solid var(--hair)}
+.pil-i{
+  display:grid;gap:6px 30px;padding:clamp(26px,3.6vw,40px) 0;border-bottom:1px solid var(--hair-2);
+}
+@media(min-width:900px){.pil-i{grid-template-columns:78px minmax(0,300px) minmax(0,1fr);align-items:start;gap:0 40px}}
+.pil-n{font-family:var(--serif);font-size:1.6rem;color:var(--gold);line-height:1;font-weight:400}
+.pil-i p{color:var(--mut);font-size:15.4px;line-height:1.62;max-width:60ch}
+
+/* ---------- cita con imagen ---------- */
+.quote{position:relative;overflow:hidden;background:var(--navy-deep);isolation:isolate}
+.quote-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:.5}
+.quote-scrim{position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(7,21,39,.95) 0%,rgba(7,21,39,.72) 55%,rgba(7,21,39,.5) 100%)}
+.quote-in{position:relative;z-index:2;padding-top:clamp(76px,12vw,150px);padding-bottom:clamp(76px,12vw,150px)}
+.quote blockquote{
+  font-family:var(--serif);font-weight:400;color:var(--ivory);
+  font-size:clamp(1.44rem,4.1vw,2.5rem);line-height:1.22;max-width:20ch;letter-spacing:-.008em;
+}
+.quote cite{display:block;margin-top:24px;font-family:var(--sans);font-style:normal;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+
+/* ---------- portafolio · lámina marfil ---------- */
+.paper{background:var(--ivory);color:var(--navy)}
+.paper .h2,.paper .h3{color:var(--navy)}
+.paper .eyebrow{color:var(--gold-ink)}
+.paper .eyebrow::before{background:var(--gold-line)}
+.paper .lead{color:#33475F}
+.paper .src{color:#4B5F79}
+.paper .src::before{color:var(--gold-ink)}
+.paper .rule{background:rgba(167,140,85,.34)}
+.lines{display:grid;gap:0;margin-top:clamp(30px,4.4vw,50px);border-top:1px solid rgba(11,30,60,.16)}
+.line{
+  display:grid;gap:12px 40px;padding:clamp(28px,3.8vw,44px) 0;
+  border-bottom:1px solid rgba(11,30,60,.16);
+}
+@media(min-width:920px){.line{grid-template-columns:132px minmax(0,1fr) 232px;align-items:start;gap:0 40px}}
+.line-n{display:flex;align-items:baseline;gap:10px}
+.line-n b{font-family:var(--serif);font-size:1.5rem;color:var(--gold-ink);font-weight:500;line-height:1}
+.line-n span{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#5C6F87}
+.line h3{margin-bottom:10px}
+.line p{color:#33475F;font-size:15.2px;line-height:1.62;max-width:56ch}
+.meta{list-style:none;display:grid;gap:10px;align-content:start}
+.meta li{display:flex;gap:10px;font-size:12.5px;color:#33475F;line-height:1.45}
+.meta b{flex:0 0 auto;font-weight:500;color:var(--gold-ink);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;padding-top:2px;min-width:82px}
+.seq{
+  margin-top:clamp(28px,3.6vw,40px);padding:18px 22px;border-left:2px solid var(--gold-line);
+  background:rgba(167,140,85,.09);font-size:14.6px;color:#243D5E;line-height:1.6;
+}
+
+/* ---------- mecanismo del diagnóstico ---------- */
+.mech{margin-top:clamp(52px,7vw,86px)}
+.mech-grid{display:grid;gap:clamp(34px,5vw,56px)}
+@media(min-width:960px){.mech-grid{grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:64px}}
+.blocks{list-style:none;display:grid;gap:0;border-top:1px solid rgba(11,30,60,.16)}
+.blk{
+  display:grid;grid-template-columns:minmax(0,1fr) auto;
+  grid-template-areas:"n p" "i i" "b b";
+  gap:3px 14px;align-items:baseline;
+  padding:13px 0;border-bottom:1px solid rgba(11,30,60,.13);
+}
+.blk-name{grid-area:n;font-size:14.4px;color:var(--navy);font-weight:400}
+.blk-items{grid-area:i;font-size:11.5px;color:#5C6F87;letter-spacing:.05em}
+.blk-pct{grid-area:p;font-family:var(--serif);font-size:1.12rem;color:var(--gold-ink);font-weight:500;line-height:1}
+.blk-track{grid-area:b;position:relative;display:block;height:6px;background:rgba(11,30,60,.1);border-radius:2px;overflow:hidden;margin-top:7px}
+.blk-fill{position:absolute;top:0;left:0;width:100%;height:100%;background:var(--gold-line);border-radius:2px;
+  transform:scaleX(0);transform-origin:left center;transition:transform .95s var(--ease) .1s}
+.in .blk-fill{transform:scaleX(var(--w))}
+@media(min-width:620px){
+  .blk{grid-template-columns:minmax(0,1.35fr) 68px minmax(0,1.5fr) 46px;grid-template-areas:"n i b p";align-items:center;gap:0 16px}
+  .blk-track{margin-top:0}
+  .blk-pct{text-align:right}
+}
+.outs{list-style:none;display:grid;gap:20px}
+.out{padding-left:18px;border-left:2px solid var(--gold-line)}
+.out b{display:block;font-family:var(--serif);font-size:1.14rem;color:var(--navy);font-weight:500;margin-bottom:5px}
+.out span{font-size:14.2px;color:#33475F;line-height:1.58}
+.short{margin-top:26px;padding-top:20px;border-top:1px solid rgba(11,30,60,.16);font-size:13.6px;color:#33475F;line-height:1.6}
+
+/* ---------- objeciones ---------- */
+.objs{display:grid;gap:0;margin-top:clamp(30px,4.4vw,48px);border-top:1px solid var(--hair)}
+@media(min-width:880px){.objs{grid-template-columns:1fr 1fr;column-gap:56px}}
+.obj{padding:clamp(26px,3.6vw,36px) 0;border-bottom:1px solid var(--hair-2)}
+.obj-q{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--ivory);font-size:clamp(1.14rem,2.6vw,1.4rem);line-height:1.32;margin-bottom:14px}
+.obj-a{color:var(--mut);font-size:14.8px;line-height:1.62;margin-bottom:10px}
+.obj-tag{display:block;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;font-style:normal}
+.obj-hard{
+  grid-column:1/-1;margin-top:clamp(26px,3.6vw,38px);
+  padding:clamp(26px,4vw,42px);background:var(--card);border:1px solid var(--hair);border-radius:3px;
+}
+.obj-hard .obj-q{color:var(--gold-lt);max-width:30ch;font-size:clamp(1.3rem,3.1vw,1.86rem);margin-bottom:22px}
+.obj-hard p.obj-hard-flag{display:inline-block;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--navy-deep);background:var(--gold);padding:5px 11px;border-radius:2px;margin-bottom:18px;font-weight:600}
+.obj-hard-grid{display:grid;gap:22px;margin-top:6px}
+@media(min-width:820px){.obj-hard-grid{grid-template-columns:1fr 1fr;gap:44px}}
+.obj-hard-grid p{color:var(--soft);font-size:15px;line-height:1.64}
+.obj-hard-grid p+p{margin-top:14px}
+
+/* ---------- cierre y contacto ---------- */
+.close{position:relative;overflow:hidden;background:var(--navy-deep)}
+.close-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 55%;z-index:0;opacity:.62}
+.close-scrim{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(7,21,39,.9) 0%,rgba(7,21,39,.62) 40%,rgba(7,21,39,.97) 100%)}
+.close-in{position:relative;z-index:3;padding-top:clamp(86px,13vw,164px);padding-bottom:clamp(64px,9vw,110px);text-align:center}
+.close h2{font-size:clamp(2rem,7.2vw,4.2rem);line-height:1.05;max-width:16ch;margin:0 auto}
+.close p{margin:26px auto 0;max-width:48ch;color:var(--soft);font-size:15.4px}
+
+.form-sec{background:var(--navy);border-top:1px solid var(--hair)}
+.form-grid{display:grid;gap:clamp(38px,5.6vw,64px)}
+@media(min-width:940px){.form-grid{grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr);gap:70px}}
+.qual{list-style:none;display:grid;gap:0;border-top:1px solid var(--hair-2);margin-top:24px}
+.qual li{padding:13px 0;border-bottom:1px solid var(--hair-2);display:flex;gap:12px;font-size:13.8px;color:var(--mut);line-height:1.5}
+.qual b{flex:0 0 auto;font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;padding-top:3px;min-width:74px}
+.qual .si b{color:var(--gold)}
+.qual .no b{color:var(--ice)}
+form{display:grid;gap:16px}
+.f-row{display:grid;gap:16px}
+@media(min-width:640px){.f-row{grid-template-columns:1fr 1fr}}
+.field{display:grid;gap:7px}
+.field label{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);font-weight:500}
+.field input,.field select,.field textarea{
+  width:100%;min-height:48px;padding:12px 14px;
+  background:rgba(22,48,90,.5);border:1px solid var(--ctrl);border-radius:2px;
+  color:var(--ivory);font-family:var(--sans);font-size:15px;font-weight:300;
+  transition:border-color .3s var(--ease),background .3s var(--ease);
+}
+.field textarea{min-height:104px;resize:vertical;line-height:1.55}
+.field select{appearance:none;-webkit-appearance:none;cursor:pointer;
+  background-image:linear-gradient(45deg,transparent 50%,var(--gold) 50%),linear-gradient(135deg,var(--gold) 50%,transparent 50%);
+  background-position:calc(100% - 19px) 21px,calc(100% - 13px) 21px;background-size:6px 6px,6px 6px;background-repeat:no-repeat}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--gold);background:rgba(22,48,90,.78);outline:none}
+.field input::placeholder,.field textarea::placeholder{color:#7E93B0}
+.form-foot{display:flex;flex-wrap:wrap;align-items:center;gap:16px 22px;margin-top:6px}
+.form-note{font-size:12px;color:var(--mut);line-height:1.5;max-width:40ch}
+.aviso{
+  margin-top:4px;font-size:13px;color:var(--gold-lt);line-height:1.55;
+  padding:0;max-height:0;overflow:hidden;transition:max-height .4s var(--ease),padding .4s var(--ease);
+}
+.aviso.on{max-height:220px;padding:14px 16px;background:rgba(201,168,96,.1);border-left:2px solid var(--gold);border-radius:2px}
+
+/* ---------- pie ---------- */
+.foot{background:var(--navy-deep);padding:clamp(50px,6.6vw,76px) 0 40px;border-top:1px solid var(--hair-2)}
+.foot-top{display:grid;gap:34px;padding-bottom:34px;border-bottom:1px solid var(--hair-2)}
+@media(min-width:820px){.foot-top{grid-template-columns:auto minmax(0,1fr);gap:60px;align-items:start}}
+.lex{display:grid;gap:0;border-top:1px solid var(--hair-2)}
+.lex-r{display:grid;grid-template-columns:minmax(0,1fr);gap:2px;padding:11px 0;border-bottom:1px solid var(--hair-2);font-size:12.5px}
+.lex-r.lex-h{display:none}
+@media(min-width:640px){.lex-r{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr) minmax(0,.8fr);gap:16px;align-items:baseline}.lex-r.lex-h{display:grid}}
+.lex-r span:first-child{color:var(--mut)}
+.lex-r span:nth-child(2){color:var(--ivory)}
+.lex-r span:nth-child(3){color:var(--gold)}
+.lex-h{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.lex-h span{color:var(--gold)!important}
+.foot-bot{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between;padding-top:26px;font-size:11.5px;color:var(--mut);letter-spacing:.03em}
+
+/* ---------- revelado ---------- */
+[data-rev]{opacity:0;transform:translateY(20px);transition:opacity .85s var(--ease),transform .85s var(--ease)}
+[data-rev].in{opacity:1;transform:none}
+
+/* ---------- reduce motion ---------- */
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{
+    animation-duration:.001ms!important;animation-iteration-count:1!important;
+    transition-duration:.001ms!important;transition-delay:0ms!important;scroll-behavior:auto!important;
+  }
+  [data-rev]{opacity:1!important;transform:none!important}
+  .bar-fill{transform:scaleX(var(--w))!important}
+  .blk-fill{transform:scaleX(var(--w))!important}
+  .bgv{display:none}
+  .btn:hover{transform:none}
+}
+</style>
+<noscript><style>
+[data-rev]{opacity:1;transform:none}
+.bar-fill{transform:scaleX(var(--w))}
+.blk-fill{transform:scaleX(var(--w))}
+.bgv{display:none}
+.prog{display:none}
+.head{background:rgba(7,21,39,.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom-color:rgba(201,168,96,.26)}
+.aviso{max-height:none;padding:14px 16px;background:rgba(201,168,96,.1);border-left:2px solid var(--gold);border-radius:2px}
+</style></noscript>
+</head>
+<body id="top">
+
+<div class="prog" id="prog" aria-hidden="true"></div>
+
+<header class="head" id="head">
+  <div class="wrap head-in">
+    <!-- Lockup tipográfico provisional en CSS: el logotipo definitivo está pendiente (brief, lámina 15) -->
+    <a class="lockup" href="#top" aria-label="Hyperion Advisory, ir al inicio">
+      <span class="lk-1">Hyperion</span>
+      <span class="lk-arc" aria-hidden="true"></span>
+      <span class="lk-2">Advisory</span>
+    </a>
+    <nav class="nav" aria-label="Secciones">
+      <a href="#evidencia">La evidencia</a>
+      <a href="#relato">El relato</a>
+      <a href="#portafolio">El portafolio</a>
+      <a href="#objeciones">Objeciones</a>
+    </nav>
+    <a class="btn btn-ghost" href="#contacto">Solicitar el diagnóstico</a>
+  </div>
+</header>
+
+<main>
+
+<!-- ============ A · HERO ============ -->
+<section class="hero" aria-labelledby="h-hero">
+  <div class="hero-media">
+    <img class="hero-img" src="img/gal/sala.jpg" alt="Sala de directorio vacía a la hora azul, con la ciudad al fondo" width="1376" height="768" fetchpriority="high" decoding="async">
+    <video class="bgv" id="heroVid" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+      <source src="img/vid/sala.mp4" type="video/mp4">
+    </video>
+    <div class="hero-scrim" aria-hidden="true"></div>
+    <svg class="arc" viewBox="0 0 1200 200" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+      <defs>
+        <linearGradient id="ga1" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#C9A860" stop-opacity="0"/>
+          <stop offset=".5" stop-color="#E7CC89" stop-opacity=".92"/>
+          <stop offset="1" stop-color="#C9A860" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <path d="M-40 202 C 250 44, 950 44, 1240 202" fill="none" stroke="url(#ga1)" stroke-width="2"/>
+      <path d="M-40 220 C 250 62, 950 62, 1240 220" fill="none" stroke="url(#ga1)" stroke-width="1" opacity=".42"/>
+    </svg>
+  </div>
+
+  <div class="wrap hero-in">
+    <p class="eyebrow" data-rev>Gobernanza corporativa y calidad de decisión</p>
+    <h1 class="h1" id="h-hero" data-rev data-delay="90">Los números se auditan.<br>Las decisiones, casi nunca.</h1>
+    <p class="lead" data-rev data-delay="180">Auditamos y rediseñamos el proceso por el cual un directorio convierte información en compromiso de capital. No somos auditoría financiera, no somos coaching de directorio, no somos consultoría estratégica genérica.</p>
+    <div class="hero-cta" data-rev data-delay="270">
+      <a class="btn" href="#contacto">Solicitar el diagnóstico<span class="btn-arrow" aria-hidden="true"></span></a>
+      <!-- COPY PROPUESTO -->
+      <p class="hero-note">Instrumento de 45 ítems. Cada director responde por separado.</p>
+    </div>
+    <div class="hero-foot" data-rev data-delay="340">
+      <span>Sede Santiago de Chile</span>
+      <span>Latinoamérica y España</span>
+      <span>Trato de usted, siempre</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BANDA · LA CATEGORÍA ============ -->
+<section class="sec band" aria-labelledby="h-cat">
+  <div class="wrap band-grid">
+    <div>
+      <p class="eyebrow" data-rev>La categoría</p>
+      <h2 class="h2" id="h-cat" data-rev data-delay="70">Un vacío que nadie ocupa.</h2>
+      <p class="lead" style="margin-top:22px" data-rev data-delay="140">Toda empresa mediana audita sus estados financieros una vez al año. Ninguna audita el proceso por el cual su directorio convierte información en compromiso de capital. Ese vacío es la categoría que Hyperion ocupa.</p>
+    </div>
+    <div data-rev data-delay="180">
+      <ul class="nots">
+        <li><span class="x">No es</span>Auditoría financiera</li>
+        <li><span class="x">No es</span>Coaching de directorio</li>
+        <li><span class="x">No es</span>Consultoría estratégica genérica</li>
+        <li class="is"><span class="x">Es</span>Una auditoría del proceso decisional</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ B · LA PIEZA FIRMA: LA EVIDENCIA ============ -->
+<section class="sec evid" id="evidencia" aria-labelledby="h-evid">
+  <div class="wrap">
+    <p class="eyebrow" data-rev>01 · La evidencia</p>
+    <h2 class="h2" id="h-evid" data-rev data-delay="70">El proceso decide más<br>que el análisis.</h2>
+    <!-- COPY PROPUESTO -->
+    <p class="lead" style="margin-top:24px" data-rev data-delay="140">Cuatro cifras sostienen la categoría. Ninguna es una opinión sobre gobierno corporativo: son mediciones publicadas, con autor identificado y fuente al pie.</p>
+
+    <!-- Gráfico 39% vs 8% · toda barra lleva etiqueta de valor directa (sistema de marca, lámina 15) -->
+    <div class="chart" data-rev data-delay="120">
+      <p class="chart-t">Qué explica la varianza del resultado</p>
+      <!-- COPY PROPUESTO -->
+      <p class="chart-s">Dos variables, medidas sobre la misma base de decisiones de inversión.</p>
+
+      <div class="bar">
+        <p class="bar-lbl">Calidad del proceso decisional</p>
+        <span class="bar-track" aria-hidden="true"><span class="bar-fill f-gold" style="--w:.39"></span></span>
+        <p class="bar-val">39%</p>
+      </div>
+      <div class="bar b2">
+        <p class="bar-lbl">Calidad del análisis</p>
+        <span class="bar-track" aria-hidden="true"><span class="bar-fill f-ice" style="--w:.08"></span></span>
+        <p class="bar-val">8%</p>
+      </div>
+
+      <div class="chart-axis"><span>0%</span><span class="axis-mid">Varianza del resultado · escala 0 a 100%</span><span>100%</span></div>
+      <p class="src" style="margin-top:14px">Lovallo &amp; Sibony, McKinsey Quarterly.</p>
+    </div>
+
+    <div class="figs">
+      <div class="fig" data-rev>
+        <span class="fig-n">+6,9 pp</span>
+        <p class="fig-t">De ROI adicional en el cuartil superior de calidad de proceso decisional.</p>
+        <p class="src">Lovallo &amp; Sibony, McKinsey Quarterly.</p>
+      </div>
+      <div class="fig" data-rev data-delay="90">
+        <span class="fig-n">55%</span>
+        <p class="fig-t">De diferencia mediana entre profesionales evaluando exactamente el mismo caso. Esperaban 10%.</p>
+        <p class="src">Kahneman, Sibony &amp; Sunstein.</p>
+      </div>
+      <div class="fig" data-rev data-delay="180">
+        <span class="fig-n">28%</span>
+        <p class="fig-t">De 2.207 ejecutivos calificó como buena la calidad de sus decisiones estratégicas.</p>
+        <p class="src">Lovallo &amp; Sibony, McKinsey Quarterly.</p>
+      </div>
+    </div>
+
+    <div class="sup" data-rev>
+      <p class="sup-t">Cifras de apoyo</p>
+      <ul class="sup-l">
+        <li>
+          <b>90%</b><span>de correlación en la asignación de capital año a año, durante veinte años. Anclaje presupuestario.</span>
+          <span class="src">Lovallo &amp; Sibony, McKinsey Quarterly.</span>
+        </li>
+        <li>
+          <b>80%</b><span>de los negocios no rentables y demandantes de caja sobrevivieron una década. Unidades zombi.</span>
+          <span class="src">Lovallo &amp; Sibony, McKinsey Quarterly.</span>
+        </li>
+        <li>
+          <b>70%</b><span>de reducción del error de estimación al usar comparables reales. Clase de referencia.</span>
+          <span class="src">Flyvbjerg.</span>
+        </li>
+        <li>
+          <b>+1,5% a +3,9%</b><span>de retorno al accionista con reasignación dinámica de capital.</span>
+          <span class="src">Lovallo &amp; Sibony, McKinsey Quarterly.</span>
+        </li>
+      </ul>
+      <p class="fuentes"><strong>Base documental.</strong> Lovallo &amp; Sibony (McKinsey Quarterly) · Kahneman, Sibony &amp; Sunstein · Flyvbjerg · Malmendier &amp; Tate (NBER). Hyperion no publica cifras propias de resultado: toda cifra de esta página proviene de investigación con autor identificado.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CITA ============ -->
+<section class="quote" aria-label="El diferencial del instrumento">
+  <img class="quote-img" src="img/gal/mesa.jpg" alt="Primer plano de la mesa de directorio con una carpeta cerrada en cada asiento" width="1376" height="768" loading="lazy" decoding="async">
+  <div class="quote-scrim" aria-hidden="true"></div>
+  <div class="wrap quote-in">
+    <blockquote data-rev>El diferencial no es el cuestionario. Es que mide el desacuerdo entre directores, no el promedio de la mesa.</blockquote>
+    <cite data-rev data-delay="120">Diagnóstico de Sesgos de Directorio</cite>
+  </div>
+</section>
+
+<!-- ============ C · LOS TRES PILARES ============ -->
+<section class="sec" id="relato" aria-labelledby="h-rel">
+  <div class="wrap">
+    <p class="eyebrow" data-rev>02 · El relato</p>
+    <h2 class="h2" id="h-rel" data-rev data-delay="70">Tres pilares.</h2>
+    <div class="pil">
+      <article class="pil-i" data-rev>
+        <span class="pil-n">01</span>
+        <h3 class="h3">El proceso es el activo</h3>
+        <p>La calidad del proceso decisional predice el resultado mejor que la calidad del análisis. Es una variable de gestión, no un rasgo de personalidad.</p>
+      </article>
+      <article class="pil-i" data-rev data-delay="90">
+        <span class="pil-n">02</span>
+        <h3 class="h3">El desacuerdo es medible</h3>
+        <p>El ruido entre directores existe, es cuantificable y cuesta dinero. Medirlo es el primer acto de gobierno corporativo real.</p>
+      </article>
+      <article class="pil-i" data-rev data-delay="180">
+        <span class="pil-n">03</span>
+        <h3 class="h3">El correctivo es barato</h3>
+        <p>Pre-mortem, contradictor formal, voto confidencial previo, bitácora. Prácticas de bajo costo y efecto documentado.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ D · PORTAFOLIO ============ -->
+<section class="sec paper" id="portafolio" aria-labelledby="h-port">
+  <div class="wrap">
+    <p class="eyebrow" data-rev>03 · El portafolio</p>
+    <h2 class="h2" id="h-port" data-rev data-delay="70">Tres líneas, una secuencia.</h2>
+    <p class="lead" style="margin-top:22px" data-rev data-delay="140">El diagnóstico abre. La arquitectura instala. El acompañamiento sostiene.</p>
+
+    <div class="lines">
+      <article class="line" data-rev>
+        <div class="line-n"><b>01</b><span>Producto ancla</span></div>
+        <div>
+          <h3 class="h3">Diagnóstico de Sesgos de Directorio</h3>
+          <p>Instrumento de 45 ítems que cada director responde por separado. Entrega el Índice de Vulnerabilidad Decisional (IVD), el Índice de Ruido entre directores y un plan 30/60/90. Es el producto de entrada al portafolio.</p>
+        </div>
+        <ul class="meta">
+          <li><b>Ciclo</b><span>4 a 8 semanas</span></li>
+          <li><b>Rol</b><span>Adquisición y calificación</span></li>
+        </ul>
+      </article>
+
+      <article class="line" data-rev data-delay="80">
+        <div class="line-n"><b>02</b><span>Mandato</span></div>
+        <div>
+          <h3 class="h3">Arquitectura de decisión</h3>
+          <p>Rediseño del ciclo de asignación de capital: clase de referencia, contradictor formal, voto confidencial previo, criterios explícitos, bitácora de decisiones.</p>
+        </div>
+        <ul class="meta">
+          <li><b>Proyecto</b><span>3 a 6 meses</span></li>
+          <li><b>Ciclo</b><span>2 a 4 meses</span></li>
+          <li><b>Rol</b><span>Monetización principal</span></li>
+        </ul>
+      </article>
+
+      <article class="line" data-rev data-delay="160">
+        <div class="line-n"><b>03</b><span>Recurrente</span></div>
+        <div>
+          <h3 class="h3">CFO fraccional y acompañamiento</h3>
+          <p>Presencia fraccional en comité y directorio: disciplina financiera más higiene de decisión. Es la línea de ingreso recurrente y el objetivo de conversión de largo plazo.</p>
+        </div>
+        <ul class="meta">
+          <li><b>Ciclo</b><span>3 a 6 meses</span></li>
+          <li><b>Rol</b><span>Retención y valor de vida</span></li>
+        </ul>
+      </article>
+    </div>
+
+    <!-- COPY PROPUESTO -->
+    <p class="seq">Ninguna mesa empieza por la arquitectura. Se empieza por la medición, porque hasta que el desacuerdo no está en una cifra, la conversación sigue siendo una opinión contra otra.</p>
+
+    <!-- ---- mecanismo del diagnóstico ---- -->
+    <div class="mech">
+      <hr class="rule">
+      <p class="eyebrow" style="margin-top:clamp(34px,4.6vw,52px)" data-rev>Cómo funciona el diagnóstico</p>
+      <div class="mech-grid">
+        <div data-rev>
+          <h3 class="h3" style="margin-bottom:20px">Siete bloques, 45 ítems, un índice</h3>
+          <ul class="blocks">
+            <li class="blk"><span class="blk-name">A · Sesgos de acción</span><span class="blk-items">6 ítems</span><span class="blk-track" aria-hidden="true"><i class="blk-fill" style="--w:.75"></i></span><span class="blk-pct">15%</span></li>
+            <li class="blk"><span class="blk-name">B · Sesgos de estabilidad</span><span class="blk-items">7 ítems</span><span class="blk-track" aria-hidden="true"><i class="blk-fill" style="--w:.75"></i></span><span class="blk-pct">15%</span></li>
+            <li class="blk"><span class="blk-name">C · Sesgos de patrón</span><span class="blk-items">6 ítems</span><span class="blk-track" aria-hidden="true"><i class="blk-fill" style="--w:.65"></i></span><span class="blk-pct">13%</span></li>
+            <li class="blk"><span class="blk-name">D · Sesgos de interés</span><span class="blk-items">5 ítems</span><span class="blk-track" aria-hidden="true"><i class="blk-fill" style="--w:.60"></i></span><span class="blk-pct">12%</span></li>
+            <li class="blk"><span class="blk-name">E · Sesgos sociales</span><span class="blk-items">7 ítems</span><span class="blk-track" aria-hidden="true"><i class="blk-fill" style="--w:.75"></i></span><span class="blk-pct">15%</span></li>
+            <li class="blk"><span class="blk-name">F · Higiene de proceso</span><span class="blk-items">8 ítems</span><span class="blk-track" aria-hidden="true"><i class="blk-fill" style="--w:1"></i></span><span class="blk-pct">20%</span></li>
+            <li class="blk"><span class="blk-name">G · Condiciones de decisión</span><span class="blk-items">6 ítems</span><span class="blk-track" aria-hidden="true"><i class="blk-fill" style="--w:.50"></i></span><span class="blk-pct">10%</span></li>
+          </ul>
+          <p class="src plain" style="margin-top:14px">Peso de cada bloque en el índice. Las barras están a escala del bloque de mayor peso, 20%. El valor exacto va escrito en cada fila.</p>
+        </div>
+
+        <div data-rev data-delay="100">
+          <ul class="outs">
+            <li class="out">
+              <b>IVD · Índice de Vulnerabilidad Decisional</b>
+              <span>Promedio ponderado de los siete bloques, de 0 a 100. Bandas: bajo, moderado, alto, crítico.</span>
+            </li>
+            <li class="out">
+              <b>Índice de Ruido</b>
+              <span>Dispersión de las respuestas entre directores. Requiere mínimo tres respuestas; cuatro para informe completo.</span>
+            </li>
+            <li class="out">
+              <b>Puntos ciegos</b>
+              <span>Ítems donde el promedio tranquiliza pero el desacuerdo es alto. Suele ser el hallazgo que abre la conversación.</span>
+            </li>
+            <li class="out">
+              <b>Plan 30/60/90</b>
+              <span>Ocho prácticas correctivas seleccionadas de un catálogo de catorce, según el perfil de riesgo detectado.</span>
+            </li>
+          </ul>
+          <p class="short">Existe además una versión corta de diez preguntas, construida como herramienta autocontenida, pensada como puerta de entrada al instrumento completo.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ E · LAS CINCO OBJECIONES ============ -->
+<section class="sec evid" id="objeciones" aria-labelledby="h-obj">
+  <div class="wrap">
+    <p class="eyebrow" data-rev>04 · Las objeciones</p>
+    <h2 class="h2" id="h-obj" data-rev data-delay="70">Cinco objeciones reales.<br>Cinco respuestas.</h2>
+    <!-- COPY PROPUESTO -->
+    <p class="lead" style="margin-top:24px" data-rev data-delay="140">No son hipótesis. Son las respuestas que aparecen en conversación comercial. Están aquí para que no tenga que esperar a la reunión.</p>
+
+    <div class="objs">
+      <article class="obj" data-rev>
+        <p class="obj-q">«Esto es psicología, no gestión»</p>
+        <p class="obj-a"><span class="obj-tag">Respuesta</span>El hallazgo central es financiero, no clínico. El proceso explica 39% de la varianza del resultado; el análisis, 8%.</p>
+        <p class="src">Lovallo &amp; Sibony, McKinsey Quarterly.</p>
+      </article>
+
+      <article class="obj" data-rev data-delay="70">
+        <p class="obj-q">«Nuestro directorio funciona bien»</p>
+        <p class="obj-a"><span class="obj-tag">Respuesta</span>No se discute el resultado, se mide el desacuerdo. Casi siempre la mesa cree estar más alineada de lo que está.</p>
+      </article>
+
+      <article class="obj" data-rev data-delay="140">
+        <p class="obj-q">«Suena a exponer a las personas»</p>
+        <p class="obj-a"><span class="obj-tag">Respuesta</span>La respuesta es individual, la devolución es agregada y el informe se abre por el desacuerdo, nunca por un ranking de directores.</p>
+      </article>
+
+      <article class="obj" data-rev data-delay="210">
+        <p class="obj-q">«Ya tenemos auditoría y contraloría»</p>
+        <p class="obj-a"><span class="obj-tag">Respuesta</span>Ambas revisan lo que ya ocurrió, expresado en números. Ninguna revisa cómo se llegó a comprometer el capital.</p>
+      </article>
+
+      <article class="obj obj-hard" data-rev>
+        <p class="obj-hard-flag">La más difícil</p>
+        <p class="obj-q">«¿Y esto quién lo ha hecho antes en mi mercado?»</p>
+        <div class="obj-hard-grid">
+          <div>
+            <p>La categoría es nueva en todos los mercados de habla hispana y no hay casos publicados. Fuera de Chile se agrava: tampoco existe red de referencias.</p>
+          </div>
+          <div>
+            <!-- COPY PROPUESTO -->
+            <p>Esta página no exhibe casos, testimonios ni logotipos de clientes, porque hoy Hyperion no los tiene. Exhibirlos sería el primer sesgo del expediente.</p>
+            <p>Lo que sí puede poner sobre la mesa es el instrumento completo, el método de puntuación de cada bloque y la investigación que lo sostiene, con autor y fuente. Se juzga eso.</p>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ F · CIERRE Y CONTACTO ============ -->
+<section class="close" aria-labelledby="h-close">
+  <img class="close-img" src="img/gal/silla.jpg" alt="Una silla vacía en la cabecera de la mesa de directorio, con luz dorada rasante" width="1376" height="768" loading="lazy" decoding="async">
+  <div class="close-scrim" aria-hidden="true"></div>
+  <svg class="arc" viewBox="0 0 1200 200" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id="ga2" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#C9A860" stop-opacity="0"/>
+        <stop offset=".5" stop-color="#E7CC89" stop-opacity=".9"/>
+        <stop offset="1" stop-color="#C9A860" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
+    <path d="M-40 202 C 250 44, 950 44, 1240 202" fill="none" stroke="url(#ga2)" stroke-width="2"/>
+  </svg>
+  <div class="wrap close-in">
+    <h2 class="h2" id="h-close" data-rev>¿Cuántas respuestas distintas recibe?</h2>
+    <p data-rev data-delay="120">Es la pregunta con la que Hyperion abre una conversación con un directorio.</p>
+  </div>
+</section>
+
+<section class="sec form-sec" id="contacto" aria-labelledby="h-form">
+  <div class="wrap form-grid">
+    <div>
+      <p class="eyebrow" data-rev>05 · La conversación</p>
+      <h3 class="h3" id="h-form" data-rev data-delay="60">Antes de escribir, revise si su mesa califica.</h3>
+      <ul class="qual" data-rev data-delay="120">
+        <li class="si"><b>Califica</b><span>Órgano de gobierno con sesiones periódicas y actas; al menos un miembro externo o la intención de incorporarlo.</span></li>
+        <li class="si"><b>Califica</b><span>Conflicto declarado entre la visión del fundador y la de la segunda generación.</span></li>
+        <li class="si"><b>Califica</b><span>Proceso de profesionalización en marcha: ERP, BI, CFO, gobierno corporativo.</span></li>
+        <li class="si"><b>Califica</b><span>Operación multipaís o plan de expansión regional, donde la mesa decide sobre mercados que no conoce de primera mano.</span></li>
+        <li class="no"><b>No califica</b><span>Empresa sin instancia colegiada de decisión; decisión concentrada en una sola persona sin contrapeso.</span></li>
+        <li class="no"><b>No califica</b><span>Búsqueda de certificación o cumplimiento formal, no de mejora real del proceso.</span></li>
+      </ul>
+    </div>
+
+    <div data-rev data-delay="100">
+      <form id="form-contacto" novalidate>
+        <div class="f-row">
+          <div class="field">
+            <label for="f-nombre">Nombre y apellido</label>
+            <input id="f-nombre" name="nombre" type="text" autocomplete="name" placeholder="Su nombre">
+          </div>
+          <div class="field">
+            <label for="f-correo">Correo</label>
+            <input id="f-correo" name="correo" type="email" autocomplete="email" placeholder="nombre@empresa.com">
+          </div>
+        </div>
+        <div class="f-row">
+          <div class="field">
+            <label for="f-empresa">Empresa</label>
+            <input id="f-empresa" name="empresa" type="text" autocomplete="organization" placeholder="Razón social o nombre de fantasía">
+          </div>
+          <div class="field">
+            <label for="f-rol">Su rol en la mesa</label>
+            <select id="f-rol" name="rol">
+              <option value="">Seleccione</option>
+              <option>Fundador o gerente general</option>
+              <option>Director o consejero externo</option>
+              <option>CFO o gerente de finanzas</option>
+              <option>Gerente de personas o recursos humanos</option>
+              <option>Otro</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="f-mercado">Mercado</label>
+          <select id="f-mercado" name="mercado">
+            <option value="">Seleccione</option>
+            <option>Chile</option>
+            <option>España</option>
+            <option>México</option>
+            <option>Colombia</option>
+            <option>Perú</option>
+            <option>Argentina</option>
+            <option>Uruguay</option>
+            <option>Ecuador</option>
+            <option>Centroamérica</option>
+            <option>República Dominicana</option>
+            <option>Otro</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="f-caso">Contexto de la mesa</label>
+          <textarea id="f-caso" name="caso" rows="4" placeholder="Cuántos directores la componen, cuántos son externos y qué decisión tienen por delante."></textarea>
+        </div>
+        <div class="form-foot">
+          <button class="btn" type="submit">Solicitar el diagnóstico<span class="btn-arrow" aria-hidden="true"></span></button>
+          <!-- COPY PROPUESTO -->
+          <p class="form-note">Sus respuestas son individuales. La devolución al directorio es siempre agregada.</p>
+        </div>
+        <p class="aviso" id="form-aviso" role="status" aria-live="polite"><noscript>Formulario de demostración: no envía datos a ningún destino.</noscript></p>
+      </form>
+      <!-- Declaración obligatoria: el brief deja correo y teléfono en [A COMPLETAR] -->
+      <p class="src plain" style="margin-top:18px">Demostración de propuesta. Este formulario no envía datos a ningún destino: el correo de contacto, el teléfono y el enlace de agendamiento están pendientes de definición en el brief.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-top">
+      <div>
+        <a class="lockup" href="#top" aria-label="Hyperion Advisory, volver arriba">
+          <span class="lk-1">Hyperion</span>
+          <span class="lk-arc" aria-hidden="true"></span>
+          <span class="lk-2">Advisory</span>
+        </a>
+        <p class="src plain" style="margin-top:18px;max-width:30ch">Sede Santiago de Chile. Mercados: Latinoamérica hispanohablante y España.</p>
+      </div>
+      <div>
+        <p class="lex-h" style="margin-bottom:12px">Léxico por mercado</p>
+        <div class="lex">
+          <div class="lex-r lex-h"><span>Mercado</span><span>Órgano</span><span>Integrante</span></div>
+          <div class="lex-r"><span>Chile, Perú, Argentina, Uruguay</span><span>Directorio</span><span>Director</span></div>
+          <div class="lex-r"><span>España, México</span><span>Consejo de administración</span><span>Consejero</span></div>
+          <div class="lex-r"><span>Colombia, Rep. Dominicana, Venezuela</span><span>Junta directiva</span><span>Miembro de junta</span></div>
+        </div>
+        <p class="src plain" style="margin-top:14px">Esta página está escrita en el léxico de Chile. El nombre del instrumento se adapta al órgano local en cada mercado de destino.</p>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <span>Hyperion Advisory · Gobernanza y decisión</span>
+      <span>Fuentes: Lovallo &amp; Sibony (McKinsey Quarterly) · Kahneman, Sibony &amp; Sunstein · Flyvbjerg · Malmendier &amp; Tate (NBER)</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  var d = document;
+  var mq = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+  var reduce = mq ? mq.matches : false;
+  var hasIO = ('IntersectionObserver' in window);
+
+  /* ---- revelado al entrar en viewport ---- */
+  var revs = d.querySelectorAll('[data-rev]');
+  var i;
+  if (reduce || !hasIO) {
+    for (i = 0; i < revs.length; i++) { revs[i].classList.add('in'); }
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (!en.isIntersecting) { return; }
+        var el = en.target;
+        var delay = parseInt(el.getAttribute('data-delay') || '0', 10);
+        if (delay > 0) { setTimeout(function(){ el.classList.add('in'); }, delay); }
+        else { el.classList.add('in'); }
+        io.unobserve(el);
+      });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.12 });
+    for (i = 0; i < revs.length; i++) { io.observe(revs[i]); }
+  }
+
+  /* ---- progreso dorado + cabecera ---- */
+  var prog = d.getElementById('prog');
+  var head = d.getElementById('head');
+  var ticking = false;
+  function paint(){
+    var st = window.pageYOffset || d.documentElement.scrollTop || 0;
+    var h = d.documentElement.scrollHeight - window.innerHeight;
+    var p = h > 0 ? st / h : 0;
+    if (p < 0) { p = 0; }
+    if (p > 1) { p = 1; }
+    if (prog) { prog.style.transform = 'scaleX(' + p + ')'; }
+    if (head) {
+      if (st > 24) { head.classList.add('sticky'); }
+      else { head.classList.remove('sticky'); }
+    }
+    ticking = false;
+  }
+  function onScroll(){
+    if (ticking) { return; }
+    ticking = true;
+    window.requestAnimationFrame(paint);
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+  paint();
+
+  /* ---- video del hero (capa sobre la imagen) ---- */
+  var v = d.getElementById('heroVid');
+  if (v && !reduce) {
+    var enciende = function(){
+      if (v.readyState >= 3 && !v.paused) { v.classList.add('ok'); }
+    };
+    ['playing','canplay','loadeddata'].forEach(function(ev){ v.addEventListener(ev, enciende); });
+    v.addEventListener('error', function(){ v.classList.remove('ok'); });
+    var pr = v.play();
+    if (pr && typeof pr.catch === 'function') { pr.catch(function(){}); }
+    enciende();
+    setTimeout(enciende, 600);
+    setTimeout(enciende, 1800);
+    if (hasIO) {
+      /* observer de reproducción: no se hace unobserve porque pausa al salir de pantalla */
+      var vio = new IntersectionObserver(function(es){
+        es.forEach(function(en){
+          if (en.isIntersecting) {
+            var p2 = v.play();
+            if (p2 && typeof p2.catch === 'function') { p2.catch(function(){}); }
+          } else {
+            v.pause();
+          }
+        });
+      }, { threshold: 0.05 });
+      vio.observe(v);
+    }
+  }
+
+  /* ---- formulario de demostración: no envía a ninguna parte ---- */
+  var form = d.getElementById('form-contacto');
+  var aviso = d.getElementById('form-aviso');
+  if (form && aviso) {
+    form.addEventListener('submit', function(ev){
+      ev.preventDefault();
+      aviso.textContent = 'Formulario de demostración: no se envió ningún dato. El destino de contacto está pendiente de definición en el brief.';
+      aviso.classList.add('on');
+    });
+  }
+})();
+</script>
+</body>
+</html>
